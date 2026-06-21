@@ -1,0 +1,1200 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HELL 2 OVER | EXPERIENCE</title>
+<meta name="description" content="HELL 2 OVER - 從地獄升騰而來的極致挑戰與火熱五感。純淨曜白與奢華流金交織的液體信仰。">
+<meta property="og:type" content="website">
+<meta property="og:title" content="HELL 2 OVER | EXPERIENCE">
+<meta property="og:description" content="體驗屬於你的步調，純淨曜白與高奢流金交織。喝下的不只是水，而是情緒。">
+<meta property="og:image" content="https://hell-2-over.vercel.app/H2O_FINAL.jpg">
+
+<style>
+/* ===== RESET & BASE ===== */
+*{ margin: 0; padding: 0; box-sizing: border-box; }
+
+html{
+    scroll-behavior: smooth;
+    scroll-snap-type: y mandatory;
+    scroll-padding-top: 80px; 
+    background: #ffffff; 
+}
+
+body{
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: #ffffff; 
+    color: #1a1a1a; 
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+}
+
+body.loading { overflow: hidden; }
+
+/* ===== 系統變數 ===== */
+:root {
+    --gold: #dfb76c;
+    --gold-dim: rgba(223, 183, 108, 0.4);
+    --gold-light: rgba(223, 183, 108, 0.05);
+    --dark: #1a1a1a;
+    --dark-dim: rgba(26, 26, 26, 0.7);
+}
+
+/* ===== LOADER ===== */
+.loader{
+    position: fixed; inset: 0; background: #fafafa; z-index: 99999;
+    display: flex; justify-content: center; align-items: center; flex-direction: column;
+    animation: loaderFade 0.8s 3.2s cubic-bezier(0.85, 0, 0.15, 1) forwards;
+}
+.loaderLogo{
+    font-size: clamp(16px, 3vw, 24px); letter-spacing: 15px; text-indent: 15px;
+    color: #dfb76c; font-weight: 300; opacity: 0;
+    animation: fadeInOut 2.8s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+    will-change: opacity, filter, transform;
+}
+.loaderLine{
+    margin-top: 30px; width: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, #b5893d, #dfb76c, transparent);
+    animation: lineGrow 2s 0.3s cubic-bezier(0.85, 0, 0.15, 1) forwards;
+    will-change: width;
+}
+
+/* ===== FILM NOISE & BG ===== */
+.noise{
+    position: fixed; inset: 0; pointer-events: none; z-index: 998; opacity: 0.06; 
+    background-image: url("https://grainy-gradients.vercel.app/noise.svg");
+    mix-blend-mode: multiply; 
+}
+.bg{
+    position: fixed; inset: 0; z-index: -2; pointer-events: none;
+    background: 
+    radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(223,183,108,0.12), transparent 40%),
+    radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(181,137,61,0.06), transparent 65%);
+    will-change: background;
+}
+
+/* ===== CURSOR ===== */
+.cursor-dot {
+    width: 6px; height: 6px; background: #dfb76c; position: fixed;
+    pointer-events: none; z-index: 100115; border-radius: 50%;
+    transform: translate(-50%, -50%); will-change: left, top;
+}
+.cursor-outline {
+    width: 30px; height: 30px; border: 1px solid rgba(223, 183, 108, 0.6); 
+    position: fixed; pointer-events: none; z-index: 100114; border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.3s, height 0.3s, background-color 0.3s, border-color 0.3s;
+    will-change: left, top, width, height;
+}
+.cursor-hover .cursor-outline {
+    width: 60px; height: 60px; background: #dfb76c; border-color: transparent; opacity: 0.4; 
+}
+
+/* ===== ORBS ===== */
+.orb{
+    position: fixed; border-radius: 50%; filter: blur(140px); pointer-events: none; z-index: -1;
+    will-change: transform;
+}
+.orb1{ width: 500px; height: 500px; background: #b5893d; top: -15%; left: -10%; opacity: 0.15; animation: orbFloat1 20s infinite ease-in-out; }
+.orb2{ width: 550px; height: 550px; background: #dfb76c; bottom: -10%; right: -10%; opacity: 0.15; animation: orbFloat2 25s infinite ease-in-out; }
+.orb3{ width: 400px; height: 400px; background: #8a6d3b; top: 35%; left: 45%; opacity: 0.1; animation: orbFloat3 22s infinite ease-in-out; }
+
+/* ===== NAV ===== */
+nav{
+    position: fixed; top: 0; left: 0; width: 100%; padding: 30px 50px;
+    display: flex; justify-content: space-between; align-items: center;
+    background: linear-gradient(to bottom, rgba(255,255,255,0.95), rgba(255,255,255,0.7)); 
+    backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    z-index: 1001; border-bottom: 1px solid rgba(223, 183, 108, 0.15);
+}
+.logo{
+    letter-spacing: 10px; font-size: 13px; font-weight: 900; text-decoration: none;
+    color: #dfb76c; cursor: pointer; transition: opacity 0.3s; position: relative; z-index: 1003;
+}
+.logo:hover { opacity: 0.7; }
+.navRight{ display: flex; gap: 30px; font-size: 11px; letter-spacing: 4px; align-items: center; }
+.navLinks { display: flex; gap: 25px; }
+.navLinks a {
+    color: rgba(26, 26, 26, 0.6); text-decoration: none; transition: color 0.3s; position: relative; padding-bottom: 4px;
+}
+.navLinks a:hover, .navLinks a.active { color: #dfb76c; }
+.navLinks a::after {
+    content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 1px;
+    background: #dfb76c; transition: width 0.3s ease;
+}
+.navLinks a.active::after { width: 100%; }
+
+/* 已登錄狀態特殊視覺樣式與登出虛擬提示 */
+.navLinks a#navMemberBtn.loggedin-status {
+    color: #dfb76c; font-weight: 600; text-shadow: 0 0 10px rgba(223, 183, 108, 0.3);
+}
+.navLinks a#navMemberBtn.loggedin-status::after {
+    width: 100%; background: linear-gradient(90deg, #dfb76c, transparent);
+}
+.navLinks a#navMemberBtn.loggedin-status:hover {
+    color: #ff6b6b; text-shadow: 0 0 10px rgba(255, 107, 107, 0.4);
+}
+
+.audio-toggle {
+    font-family: monospace; font-size: 10px; border: 1px solid rgba(223,183,108,0.4);
+    color: #dfb76c; padding: 4px 8px; letter-spacing: 1px; cursor: pointer; transition: all 0.3s;
+}
+.audio-toggle:hover { color: #ffffff; border-color: #dfb76c; background: #dfb76c; }
+
+.menu-toggle {
+    display: none; flex-direction: column; gap: 5px; cursor: pointer;
+    background: transparent; border: none; padding: 10px; z-index: 1005; position: relative;
+}
+.menu-toggle span {
+    display: block; width: 22px; height: 2px; background: #dfb76c; transition: transform 0.3s, opacity 0.3s;
+}
+
+/* ===== SECTION BASE ===== */
+section{
+    min-height: 100vh; scroll-snap-align: start; scroll-snap-stop: always;
+    display: flex; justify-content: center; align-items: center; flex-direction: column;
+    text-align: center; padding: 100px 40px; position: relative; overflow: hidden; z-index: 1;
+}
+
+/* ===== HERO ===== */
+.hero h1 {
+    font-size: clamp(48px, 12vw, 160px); font-weight: 900;
+    letter-spacing: clamp(10px, 4vw, 40px); text-indent: clamp(10px, 4vw, 40px);
+    background: linear-gradient(180deg, #1a1a1a 10%, #dfb76c 60%, rgba(181,137,61,0.2) 100%); 
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; color: transparent;
+    filter: drop-shadow(0 0 20px rgba(223, 183, 108, 0.2));
+    opacity: 0; transform: scale(0.95); transition: all 2s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: transform, opacity;
+}
+body:not(.loading) .hero h1 {
+    opacity: 1; letter-spacing: clamp(8px, 2vw, 24px); text-indent: clamp(8px, 2vw, 24px); transform: scale(1);
+}
+
+.mainSlogan{
+    margin-top: 30px; font-size: clamp(12px, 1.5vw, 18px); letter-spacing: 8px; text-indent: 8px;
+    color: rgba(223, 183, 108, 0.9); text-transform: uppercase; font-weight: 500;
+}
+.sloganLoop{ margin-top: 50px; position: relative; height: 30px; width: 100%; overflow: hidden; }
+.sloganLoop span{
+    position: absolute; width: 100%; left: 0; opacity: 0; font-size: 13px; letter-spacing: 4px;
+    color: rgba(26, 26, 26, 0.5); animation: rotateText 12s infinite; will-change: transform, opacity;
+}
+.sloganLoop span:nth-child(1){ animation-delay: 0s; }
+.sloganLoop span:nth-child(2){ animation-delay: 3s; }
+.sloganLoop span:nth-child(3){ animation-delay: 6s; }
+.sloganLoop span:nth-child(4){ animation-delay: 9s; }
+
+.scrollHint{
+    position: absolute; bottom: 50px; font-size: 10px; letter-spacing: 6px; text-indent: 6px;
+    color: rgba(223, 183, 108, 0.8); animation: floatHint 2.5s infinite ease-in-out; z-index: 10;
+}
+
+/* ===== TRANSITION ANIMATION ===== */
+.story, .manifestoGroup, .products-single-wrapper, .ecoGroup, .teaserGroup {
+    max-width: 800px; opacity: 0; transform: translateY(40px); filter: blur(15px);
+    transition: opacity 1.8s cubic-bezier(0.16, 1, 0.3, 1), transform 1.8s cubic-bezier(0.16, 1, 0.3, 1), filter 1.8s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: transform, opacity, filter;
+}
+
+.story h2, .manifestoTitle, .ecoTitle, .teaserTitle {
+    letter-spacing: 2px; text-indent: 2px; color: #dfb76c; text-shadow: 0 1px 2px rgba(0,0,0,0.05);
+    transition: letter-spacing 2.2s cubic-bezier(0.16, 1, 0.3, 1), text-indent 2.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.show { opacity: 1 !important; transform: translateY(0) !important; filter: blur(0) !important; }
+.show h2, .show .manifestoTitle, .show .teaserTitle { letter-spacing: 12px; text-indent: 12px; }
+.show .ecoTitle { letter-spacing: 6px; text-indent: 6px; }
+
+.story h2{ margin-bottom: 30px; font-size: clamp(28px, 4vw, 40px); font-weight: 300; }
+.story p{ color: rgba(26, 26, 26, 0.65); line-height: 2.2; letter-spacing: 6px; text-indent: 6px; font-size: 16px; font-weight: 300; }
+
+/* ===== STORY VISUALS ===== */
+.story-visual {
+    height: 180px; width: 100%; display: flex; justify-content: center; align-items: center;
+    margin-bottom: 40px; position: relative; pointer-events: none; will-change: transform;
+}
+.visual-silence .core { width: 8px; height: 8px; background: #dfb76c; border-radius: 50%; box-shadow: 0 0 20px #dfb76c; z-index: 10; animation: silenceCore 4s infinite ease-in-out; will-change: transform, opacity; }
+.visual-silence .implode-ring { position: absolute; border: 1px solid rgba(223,183,108,0.8); border-radius: 50%; width: 250px; height: 250px; animation: implodeEffect 4s infinite cubic-bezier(0.5, 0, 0.2, 1); will-change: transform, opacity, border-width; }
+.visual-silence .implode-ring:nth-child(2) { animation-delay: 1.2s; }
+.visual-silence .implode-ring:nth-child(3) { animation-delay: 2.4s; }
+
+.visual-atmosphere { filter: blur(8px) contrast(1.2); }
+.visual-atmosphere .aura { position: absolute; border-radius: 50%; mix-blend-mode: multiply; will-change: transform; }
+.visual-atmosphere .aura1 { width: 130px; height: 130px; background: rgba(223,183,108,0.5); animation: orbit1 8s infinite alternate ease-in-out; }
+.visual-atmosphere .aura2 { width: 160px; height: 160px; background: rgba(181,137,61,0.3); animation: orbit2 10s infinite alternate-reverse ease-in-out; }
+.visual-atmosphere .aura3 { width: 100px; height: 100px; background: rgba(223,183,108,0.7); animation: pulseAura 6s infinite alternate ease-in-out; }
+
+.visual-awakening .shard { position: absolute; width: 45px; height: 45px; border: 2px solid #dfb76c; will-change: transform, border-radius; }
+.visual-awakening .shard1 { animation: awakeExplode 3s infinite cubic-bezier(0.8, 0, 0.2, 1); }
+.visual-awakening .shard2 { animation: awakeExplodeReverse 3s infinite cubic-bezier(0.8, 0, 0.2, 1); }
+.visual-awakening .energy-ray { position: absolute; width: 2px; height: 200px; background: linear-gradient(to bottom, transparent, #dfb76c, transparent); animation: rayFlash 3s infinite ease-out; will-change: transform, opacity; }
+.visual-awakening .energy-ray.horizontal { transform: rotate(90deg); animation-delay: 0.15s; }
+
+@keyframes silenceCore { 0%, 100% { transform: scale(1); filter: drop-shadow(0 0 10px #dfb76c); } 50% { transform: scale(0.3); filter: drop-shadow(0 0 2px #dfb76c); opacity: 0.5; } }
+@keyframes implodeEffect { 0% { transform: scale(1.2); opacity: 0; border-width: 1px; } 20% { opacity: 0.6; } 90% { opacity: 0.1; } 100% { transform: scale(0.02); opacity: 0; border-width: 6px; } }
+@keyframes orbit1 { 0% { transform: translate(-30px, -20px) scale(1); } 100% { transform: translate(40px, 30px) scale(1.2); } }
+@keyframes orbit2 { 0% { transform: translate(30px, 20px) scale(1.1); } 100% { transform: translate(-40px, -30px) scale(0.9); } }
+@keyframes pulseAura { 0% { transform: scale(0.7) translate(0, 10px); } 100% { transform: scale(1.4) translate(0, -10px); } }
+@keyframes awakeExplode { 0% { transform: rotate(0deg) scale(0.2); border-color: transparent; border-radius: 0; } 40% { transform: rotate(180deg) scale(2); border-color: #dfb76c; border-radius: 10%; box-shadow: 0 0 40px rgba(223, 183, 108, 0.6); background: rgba(223, 183, 108, 0.1); } 100% { transform: rotate(360deg) scale(0.2); border-color: transparent; border-radius: 50%; } }
+@keyframes awakeExplodeReverse { 0% { transform: rotate(45deg) scale(0.2); border-color: transparent; } 40% { transform: rotate(225deg) scale(2.8); border-color: rgba(223, 183, 108, 0.3); border-width: 1px;} 100% { transform: rotate(405deg) scale(0.2); border-color: transparent; } }
+@keyframes rayFlash { 0% { opacity: 0; transform: scaleY(0) rotate(var(--rot, 0deg)); } 40% { opacity: 1; transform: scaleY(1) rotate(var(--rot, 0deg)); filter: drop-shadow(0 0 10px #dfb76c); } 100% { opacity: 0; transform: scaleY(0) rotate(var(--rot, 0deg)); } }
+.visual-awakening .energy-ray { --rot: 0deg; } .visual-awakening .energy-ray.horizontal { --rot: 90deg; }
+
+/* ===== MANIFESTO ===== */
+.manifestoTitle{ font-size: clamp(32px, 6vw, 56px); line-height: 1.3; font-weight: 900; }
+.manifestoText{ margin-top: 50px; max-width: 680px; line-height: 2.2; letter-spacing: 2px; color: rgba(26, 26, 26, 0.7); font-size: 15px; margin-inline: auto;}
+
+/* ===== MANIFESTO FULL SCREEN MODAL ===== */
+.manifesto-modal {
+    position: fixed; inset: 0; z-index: 10005;
+    background: #0d0d0d; 
+    color: #f5f5f5; 
+    display: flex; justify-content: center; align-items: center;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    overflow-y: auto; padding: 80px 20px;
+    overscroll-behavior: contain; 
+}
+.manifesto-modal.active { opacity: 1; pointer-events: auto; }
+.modal-close {
+    position: fixed; top: 30px; right: 40px; font-size: 40px;
+    color: #dfb76c; cursor: pointer; font-weight: 300;
+    transition: transform 0.4s ease; z-index: 10006;
+}
+.modal-close:hover { transform: rotate(90deg); }
+.modal-content {
+    max-width: 760px; width: 100%; text-align: left; margin: auto;
+    transform: translateY(40px); transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    transition-delay: 0.2s;
+}
+.manifesto-modal.active .modal-content { transform: translateY(0); }
+.modal-subtitle { font-size: 12px; letter-spacing: 6px; color: #dfb76c; margin-bottom: 20px; }
+.modal-title { 
+    font-size: clamp(36px, 6vw, 64px); line-height: 1.1; font-weight: 900; 
+    color: #ffffff; 
+    margin-bottom: 50px; letter-spacing: 4px; 
+}
+.modal-text p { 
+    font-size: 15px; line-height: 2.4; letter-spacing: 2px; 
+    color: rgba(255, 255, 255, 0.75); 
+    margin-bottom: 30px; font-weight: 300; 
+}
+.modal-text p strong { color: #dfb76c; font-weight: 600; }
+.modal-text p.highlight-quote { 
+    font-size: 18px; color: #dfb76c; font-style: italic; 
+    border-left: 2px solid #dfb76c; padding-left: 20px; 
+    margin-top: 50px; padding-top: 5px; padding-bottom: 5px;
+}
+
+/* ===== MEMBERSHIP MODAL ===== */
+.member-modal {
+    position: fixed; inset: 0; z-index: 10010;
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
+    display: flex; justify-content: center; align-items: center;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    overflow-y: auto; padding: 40px 20px;
+    overscroll-behavior: contain; 
+}
+.member-modal.active { opacity: 1; pointer-events: auto; }
+
+.member-card-box {
+    width: 100%; max-width: 460px; margin: auto;
+    background: rgba(250, 250, 250, 0.9);
+    border: 1px solid rgba(223, 183, 108, 0.25);
+    box-shadow: 0 40px 100px rgba(26, 26, 26, 0.08), 0 0 60px rgba(223, 183, 108, 0.03);
+    padding: 60px 45px; position: relative; overflow: hidden;
+    transform: translateY(40px) scale(0.98); 
+    transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), height 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: transform, height;
+}
+.member-modal.active .member-card-box { transform: translateY(0) scale(1); }
+.member-card-box::before {
+    content: ''; position: absolute; top: -20%; left: -20%; width: 140px; height: 140px;
+    background: radial-gradient(circle, rgba(223,183,108,0.15) 0%, transparent 70%); pointer-events: none;
+}
+
+.member-title { 
+    font-size: 26px; font-weight: 300; letter-spacing: 8px; text-indent: 8px;
+    color: #1a1a1a; margin-bottom: 12px; text-transform: uppercase;
+}
+.member-subtitle { 
+    font-size: 12px; letter-spacing: 2px; color: rgba(26, 26, 26, 0.4); 
+    margin-bottom: 45px; line-height: 2; 
+}
+.member-subtitle strong { color: #dfb76c; font-weight: 500; }
+
+.member-form-wrapper { position: relative; height: 120px; transition: height 0.6s cubic-bezier(0.16, 1, 0.3, 1); will-change: height; }
+.member-form {
+    width: 100%; position: absolute; top: 0; left: 0;
+    transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    display: none; opacity: 0; transform: translateY(15px);
+}
+.member-form.active { display: block; opacity: 1; transform: translateY(0); }
+
+.input-group { position: relative; margin-bottom: 35px; text-align: left; }
+.input-group input {
+    width: 100%; background: transparent; border: none; 
+    border-bottom: 1px solid rgba(223, 183, 108, 0.25);
+    padding: 14px 0; color: #1a1a1a; font-size: 13px; letter-spacing: 2px;
+    outline: none; transition: border-color 0.4s;
+}
+.input-group::after {
+    content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 1px;
+    background: #dfb76c; transform: scaleX(0); transform-origin: left;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.input-group:focus-within::after { transform: scaleX(1); }
+
+.input-group label {
+    position: absolute; left: 0; top: 14px; font-size: 10px; letter-spacing: 3px;
+    color: rgba(26, 26, 26, 0.35); pointer-events: none; transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.input-group input:focus ~ label,
+.input-group input:not(:placeholder-shown) ~ label {
+    top: -12px; font-size: 9px; color: #dfb76c; letter-spacing: 2px;
+}
+.member-action { margin-top: 40px; }
+
+/* ===== PRODUCTS ===== */
+#products { background: linear-gradient(180deg, #ffffff 0%, #fafafa 50%, #ffffff 100%); }
+.products-single-wrapper { width: 100%; max-width: 720px; margin: 0 auto; position: relative; z-index: 5; }
+.card-single {
+    background: rgba(223, 183, 108, 0.02); border: 1px solid rgba(223, 183, 108, 0.2);
+    padding: 80px 60px; text-align: left; position: relative; box-shadow: 0 30px 100px rgba(0,0,0,0.04);
+    transition: background 0.4s ease;
+}
+.card-single::before {
+    content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    border: 1px solid #dfb76c; opacity: 0; transform: scale(1.02);
+    transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1); pointer-events: none;
+}
+.card-single:hover::before { opacity: 1; transform: scale(1); }
+.card-single:hover { background: rgba(223, 183, 108, 0.05); }
+
+.product-badge { font-size: 10px; letter-spacing: 4px; text-indent: 4px; color: #dfb76c; display: inline-block; margin-bottom: 15px; border: 1px solid rgba(223, 183, 108, 0.4); padding: 3px 10px; }
+.card-single h3 { color: #1a1a1a; font-size: clamp(28px, 5vw, 48px); letter-spacing: 8px; text-indent: 8px; font-weight: 300; margin-bottom: 10px; }
+.product-subtitle { color: rgba(223, 183, 108, 0.9); margin-bottom: 40px; font-size: 14px; letter-spacing: 2px; }
+.product-description { color: rgba(26, 26, 26, 0.65); font-size: 15px; line-height: 2; letter-spacing: 2px; border-top: 1px solid rgba(223, 183, 108, 0.2); padding-top: 30px; }
+.product-specs { list-style: none; margin-top: 30px; padding: 0; }
+.product-specs li { font-size: 13px; margin-bottom: 12px; color: rgba(26, 26, 26, 0.9); display: flex; align-items: center; }
+.product-specs li span { font-size: 10px; color: rgba(223, 183, 108, 0.8); letter-spacing: 2px; text-indent: 2px; width: 120px; display: inline-block; }
+
+/* ===== MAGNETIC LINK BUTTON ===== */
+.magnetic-wrap { display: inline-block; position: relative; width: 100%; z-index: 10; }
+.magnetic-btn-link, button {
+    display: block; width: 100%; padding: 16px; border: 1px solid rgba(223,183,108,0.5); background: transparent;
+    color: #dfb76c; font-size: 11px; font-weight: bold; letter-spacing: 4px; text-indent: 4px; text-decoration: none;
+    text-align: center; cursor: pointer; position: relative; z-index: 12; overflow: hidden;
+    transition: color 0.4s ease, border-color 0.4s ease; will-change: transform;
+}
+.magnetic-btn-link::after, button::after {
+    content: ''; position: absolute; inset: 0; background: #dfb76c; transform: translateY(100%);
+    z-index: -1; transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.magnetic-btn-link:hover, button:hover { color: #ffffff; border-color: #dfb76c; }
+.magnetic-btn-link:hover::after, button:hover::after { transform: translateY(0); }
+
+/* ===== ECO & TEASER ===== */
+.ecoTitle, .teaserTitle{ font-size: clamp(32px, 5vw, 64px); line-height: 1.2; font-weight: 800; }
+.ecoText, .teaserText{ margin-top: 40px; max-width: 680px; line-height: 2.2; letter-spacing: 2px; color: rgba(26, 26, 26, 0.7); font-size: 15px; margin-inline: auto;}
+.ecoGrid{ margin-top: 80px; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 40px; width: 100%; }
+.ecoCard, .timeBox{ background: transparent; border: 1px solid rgba(223, 183, 108, 0.2); padding: 50px 30px; transition: all 0.4s; }
+.ecoCard:hover{ border-color: rgba(223, 183, 108, 0.6); background: rgba(223, 183, 108, 0.03); transform: translateY(-5px); }
+.ecoCard h3{ font-size: 28px; margin-bottom: 15px; font-weight: 300; color: #1a1a1a; }
+.ecoCard p { font-size: 12px; color: rgba(26,26,26,0.6); letter-spacing: 2px; }
+
+/* ===== COUNTDOWN ===== */
+.countdown{ margin-top: 60px; margin-bottom: 40px; display: flex; gap: 30px; flex-wrap: wrap; justify-content: center; }
+.timeBox{ width: 100px; height: 100px; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+.timeBox span{ font-size: 32px; font-weight: 200; color: #dfb76c; font-variant-numeric: tabular-nums; }
+.timeLabel { font-size: 9px; letter-spacing: 3px; text-indent: 3px; color: rgba(223,183,108,0.8); margin-top: 8px; }
+
+/* ===== EMAIL SUBSCRIBE BOX ===== */
+.subscribe-box {
+    display: flex; width: 100%; max-width: 320px; margin: 0 auto;
+    border-bottom: 1px solid var(--gold-dim); padding-bottom: 10px;
+    transition: border-color 0.3s;
+}
+.subscribe-box:focus-within { border-color: var(--gold); }
+.subscribe-box input {
+    flex: 1; background: transparent; border: none; outline: none;
+    color: var(--dark); font-size: 11px; letter-spacing: 3px;
+}
+.subscribe-box input::placeholder { color: rgba(26,26,26,0.3); }
+.subscribe-box button {
+    width: auto; padding: 0 10px; border: none; color: var(--gold); background: transparent;
+    font-size: 16px; cursor: pointer; transition: transform 0.3s;
+}
+.subscribe-box button::after { display: none; }
+.subscribe-box button:hover { transform: translateX(5px); color: var(--gold); background: transparent; }
+
+/* ===== TOAST MESSAGE ===== */
+.custom-toast {
+    position: fixed;
+    bottom: -100px; left: 50%;
+    transform: translateX(-50%);
+    background: var(--dark);
+    color: var(--gold);
+    padding: 12px 24px;
+    font-size: 11px;
+    letter-spacing: 2px;
+    border: 1px solid var(--gold-dim);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    z-index: 100015;
+    transition: bottom 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s;
+    opacity: 0;
+    pointer-events: none;
+}
+.custom-toast.show { bottom: 40px; opacity: 1; }
+
+/* ===== FOOTER ===== */
+footer{ padding: 100px 40px; text-align: center; border-top: 1px solid rgba(223, 183, 108, 0.15); background: #fafafa; scroll-snap-align: end; }
+.footerLogo{ letter-spacing: 12px; text-indent: 12px; margin-bottom: 40px; font-weight: 900; font-size: 14px; text-decoration: none; color: #dfb76c; display: inline-block; }
+.footerLinks{ display: flex; justify-content: center; gap: 40px; font-size: 11px; letter-spacing: 3px; }
+.footerLinks a{ color: rgba(26, 26, 26, 0.6); cursor: pointer; text-decoration: none; transition: color 0.3s, transform 0.3s; }
+.footerLinks a:hover{ color: #dfb76c; transform: translateY(-2px); }
+footer p{ margin-top: 60px; font-size: 11px; letter-spacing: 2px; color: rgba(26, 26, 26, 0.4); }
+
+/* ===== ANIMATIONS ===== */
+@keyframes lineGrow{ to{ width: 300px; } }
+@keyframes loaderFade{ to{ opacity: 0; visibility: hidden; } }
+@keyframes fadeInOut{ 0% { opacity: 0; letter-spacing: 25px; text-indent: 25px; filter: blur(5px); } 40%, 70% { opacity: 1; letter-spacing: 12px; text-indent: 12px; filter: blur(0); } 100% { opacity: 0; filter: blur(8px); } }
+@keyframes rotateText{ 0% { opacity: 0; transform: translateY(15px); filter: blur(2px); } 6% { opacity: 1; transform: translateY(0); filter: blur(0); } 20% { opacity: 1; filter: blur(0); } 26% { opacity: 0; transform: translateY(-15px); filter: blur(2px); } 100% { opacity: 0; } }
+@keyframes floatHint{ 0%, 100%{ transform: translateY(0); opacity: 0.4; } 50%{ transform: translateY(10px); opacity: 0.8; } }
+@keyframes orbFloat1{ 0%, 100%{ transform: translate(0, 0) scale(1); } 50%{ transform: translate(60px, 40px) scale(1.15); } }
+@keyframes orbFloat2{ 0%, 100%{ transform: translate(0, 0) scale(1); } 50%{ transform: translate(-50px, -60px) scale(0.9); } }
+@keyframes orbFloat3{ 0%, 100%{ transform: translate(0, 0); } 50%{ transform: translate(-40px, 40px); } }
+
+/* ===== MEDIA QUERIES ===== */
+@media(max-width: 768px){
+    html { scroll-snap-type: none !important; }
+    nav { padding: 20px; }
+    .menu-toggle { display: flex; }
+    
+    .navRight {
+        position: fixed; top: 0; right: -100%; width: 75%; height: 100vh;
+        background: rgba(255, 255, 255, 0.98); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+        flex-direction: column; justify-content: center; gap: 40px;
+        transition: right 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        border-left: 1px solid rgba(223, 183, 108, 0.2); display: none; z-index: 1002;
+    }
+    .navRight.active { display: flex; right: 0; }
+    .navLinks { flex-direction: column; align-items: center; gap: 35px; }
+    .navLinks a { font-size: 16px; letter-spacing: 6px; }
+    
+    .menu-toggle.active span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .menu-toggle.active span:nth-child(2) { opacity: 0; }
+    .menu-toggle.active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    .ecoGrid { width: 100%; gap: 20px; }
+    .cursor-dot, .cursor-outline { display: none !important; }
+    .card-single { padding: 50px 25px; }
+    .product-specs li { flex-direction: column; align-items: flex-start; gap: 4px; margin-bottom: 18px; }
+    section { padding: 80px 20px; }
+    
+    .modal-close { top: 20px; right: 20px; }
+    .modal-text p { font-size: 14px; }
+    .member-card-box { padding: 50px 25px; }
+}
+</style>
+</head>
+
+<body class="loading">
+
+<div class="cursor-dot" id="cursorDot"></div>
+<div class="cursor-outline" id="cursorOutline"></div>
+
+<div class="loader">
+    <div class="loaderLogo">HELL 2 OVER</div>
+    <div class="loaderLine"></div>
+</div>
+
+<div class="noise"></div>
+<div class="bg"></div>
+
+<div class="orb orb1"></div>
+<div class="orb orb2"></div>
+<div class="orb orb3"></div>
+
+<nav>
+    <a href="#home" class="logo">HELL 2 OVER</a>
+    
+    <button class="menu-toggle" id="menuToggle" aria-label="Toggle Navigation">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+
+    <div class="navRight" id="navMenu">
+        <ul class="navLinks" style="list-style:none;">
+            <li><a href="#story" class="navItem">STORY</a></li>
+            <li><a href="#manifesto" class="navItem">PHILOSOPHY</a></li>
+            <li><a href="#products" class="navItem">PRODUCTS</a></li>
+            <li><a href="#eco" class="navItem">SUSTAINABILITY</a></li>
+            <li><a href="javascript:void(0);" class="navItem" id="navMemberBtn">JOIN</a></li>
+        </ul>
+        <div class="audio-toggle" id="audioToggle">AUDIO OFF</div>
+    </div>
+</nav>
+
+<section class="hero" id="home">
+    <h1>AWAKEN</h1>
+    <p class="mainSlogan">Drink the light.</p>
+    <div class="sloganLoop">
+        <span>The source remembers.</span>
+        <span>Pure clarity begins to flow.</span>
+        <span>Luxury in its purest state.</span>
+        <span>Where elegance becomes liquid.</span>
+    </div>
+    <a href="#story" class="scrollHint" style="text-decoration:none;">SCROLL TO ENTER</a>
+</section>
+
+<section class="story-section" id="story">
+    <div class="story">
+        <div class="story-visual visual-silence">
+            <div class="core"></div>
+            <div class="implode-ring"></div>
+            <div class="implode-ring"></div>
+            <div class="implode-ring"></div>
+        </div>
+        <h2>第一層：極淨</h2>
+        <p>在所有平庸消逝之前，<br>你已經看見了光芒。</p>
+    </div>
+</section>
+
+<section>
+    <div class="story">
+        <div class="story-visual visual-atmosphere">
+            <div class="aura aura1"></div>
+            <div class="aura aura2"></div>
+            <div class="aura aura3"></div>
+        </div>
+        <h2>第二層：氛圍</h2>
+        <p>體驗<br>屬於你的高端步調。</p>
+    </div>
+</section>
+
+<section>
+    <div class="story">
+        <div class="story-visual visual-awakening">
+            <div class="energy-ray"></div>
+            <div class="energy-ray horizontal"></div>
+            <div class="shard shard1"></div>
+            <div class="shard shard2"></div>
+        </div>
+        <h2>第三層：璀璨</h2>
+        <p>你喝下的不只是水，<br>而是尊榮與情緒。</p>
+    </div>
+</section>
+
+<section id="manifesto">
+    <div class="manifestoGroup">
+        <h2 class="manifestoTitle">WE DON'T SELL WATER.</h2>
+        <p class="manifestoText">
+            We create an aura of pure luxury.<br><br>
+            A brilliant moment inside a chaotic world.<br><br>
+            HELL 2 OVER exists for those who demand clarity, appreciate perfection, and refuse ordinary experiences.
+        </p>
+        
+        <div class="magnetic-wrap" style="max-width: 280px; margin: 40px auto 0 auto;">
+            <button class="magnetic-btn" id="openManifestoBtn">READ THE FULL STORY</button>
+        </div>
+    </div>
+</section>
+
+<section id="products">
+    <div class="products-single-wrapper">
+        <div class="card-single">
+            <div class="card-header">
+                <span class="product-badge">THE ONLY ONE</span>
+                <h3>DEMON'S TEAR</h3>
+                <p class="product-subtitle">Liquid For Brilliant Reborn.</p>
+            </div>
+            
+            <div class="product-description">
+                <p>這不是普通的飲水，而是一場感官的璀璨革命。源自極致純淨的火山岩脈，封存於近乎藝術品的純淨白金鋁罐中，專為拒絕平庸的洗鍊靈魂而生。</p>
+                <ul class="product-specs">
+                    <li><span>ORIGIN</span>火山岩脈深層湧泉</li>
+                    <li><span>TREATMENT</span>0.01微米級極限工藝</li>
+                    <li><span>VOLUME</span>500ml 首發白金珍藏罐</li>
+                </ul>
+            </div>
+
+            <div class="magnetic-wrap" style="max-width: 320px; margin-top: 40px;">
+                <a href="product.html" class="magnetic-btn-link">ENTER</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="eco">
+    <div class="ecoGroup">
+        <h2 class="ecoTitle">NO PLASTIC.<br>NO COMPROMISE.</h2>
+        <p class="ecoText">
+            HELL 2 OVER uses pure aluminum cans instead of disposable plastic bottles.<br><br>
+            Because timeless luxury should never destroy the future.
+        </p>
+        <div class="ecoGrid">
+            <div class="ecoCard">
+                <h3>∞</h3>
+                <p>Infinite recyclability.</p>
+            </div>
+            <div class="ecoCard">
+                <h3>NO PET</h3>
+                <p>No disposable plastic.</p>
+            </div>
+            <div class="ecoCard">
+                <h3>PURE LUXURY</h3>
+                <p>Designed for the future.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section>
+    <div class="teaserGroup">
+        <h2 class="teaserTitle">WE<br>ARE COMING</h2>
+        <p class="teaserText">A new form of hydration is approaching.<br><br>Pure. Cold. Brilliant.</p>
+        
+        <div class="countdown">
+            <div class="timeBox"><span id="days">00</span><div class="timeLabel">DAYS</div></div>
+            <div class="timeBox"><span id="hours">00</span><div class="timeLabel">HOURS</div></div>
+            <div class="timeBox"><span id="minutes">00</span><div class="timeLabel">MINS</div></div>
+            <div class="timeBox"><span id="seconds">00</span><div class="timeLabel">SECS</div></div>
+        </div>
+
+        <div style="max-width:300px; margin: 40px auto 0 auto;">
+            <p style="font-size: 11px; color: rgba(26, 26, 26, 0.5); letter-spacing: 2px; margin-bottom: 20px;" id="footerSubText">加入洗鍊席位，優先獲取首發情報</p>
+            <div class="subscribe-box" id="footerSubTrigger" style="cursor: pointer;">
+                <input type="email" id="footerSubInput" placeholder="YOUR EMAIL" style="cursor: pointer;">
+                <button type="button" id="footerSubBtn">→</button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <a href="#home" class="footerLogo">HELL 2 OVER</a>
+    <div class="footerLinks">
+        <a href="#story">STORY</a>
+        <a href="#products">PRODUCTS</a>
+        <a href="#eco">SUSTAINABILITY</a>
+    </div>
+    <p>© 2026 HELL 2 OVER. Beyond hydration.</p>
+</footer>
+
+<div class="manifesto-modal" id="manifestoModal">
+    <div class="modal-close" id="closeManifestoBtn">×</div>
+    <div class="modal-content">
+        <div class="modal-subtitle">OUR ORIGIN</div>
+        <h2 class="modal-title">THE PURITY<br>OF REBORN</h2>
+        <div class="modal-text">
+            <p>為什麼這個世界需要另一瓶水？</p>
+            <p>在這個充斥著無效社交、速度與廉價速成品的時代，人類的感官已經陷入麻木。我們發現，「喝水」這件最基礎的生命行為，竟然淪為一種慢無知覺的機械反射。</p>
+            <p><strong>DEMON'S TEAR（惡魔之淚）</strong> 誕生於一個強烈的全新命題：我們企圖在最平凡、最不被在意的事物中，創造最純粹的洗鍊與衝擊。</p>
+            <p>我們將它重新定義為白金交織的璀璨眼淚，象徵著歷經地底深處極端淬鍊後，所湧現出的絕對高貴。我們深入深層火山岩脈，不只為了過濾水中的雜質，幕後更是為了<strong>過濾掉世俗的平庸與吵雜</strong>。</p>
+            <p>這不是為所有人準備的。它專為那些感知敏銳、追求極致完美、拒絕妥協的靈魂而生。當你打開純淨白金鋁罐的瞬間，你開啟的不自由水分的補給，而是一個專屬於你的、絕對洗鍊的尊榮時空。</p>
+            <p class="highlight-quote">Drink the light. Reborn from the brilliance.</p>
+        </div>
+    </div>
+</div>
+
+<div class="member-modal" id="memberModal">
+    <div class="member-card-box">
+        <div class="modal-close" id="closeMemberBtn" style="top: 25px; right: 30px; font-size: 32px;">×</div>
+        
+        <h2 class="member-title" id="memberModalTitle">VERIFY ACCESS</h2>
+        <p class="member-subtitle" id="memberModalSubtitle">輸入獲邀信箱以驗證洗鍊資格。<br><strong>會員皆可提前獲取全球首發限定情報。</strong></p>
+
+        <div class="member-form-wrapper" id="memberFormWrapper" style="position: relative; height: 120px; transition: height 0.6s cubic-bezier(0.16, 1, 0.3, 1); will-change: height;">
+            <form class="member-form active" id="formVerify" method="POST">
+                <input type="hidden" name="_subject" value="【HELL 2 OVER】既存資格驗證請求">
+                <div class="input-group">
+                    <input type="email" id="verifyEmailInput" name="email" placeholder=" " required autocomplete="email">
+                    <label>ACCESS EMAIL</label>
+                </div>
+                <div class="member-action">
+                    <div class="magnetic-wrap">
+                        <button type="submit" class="magnetic-btn">VERIFY ACCOUNT</button>
+                    </div>
+                </div>
+            </form>
+
+            <form class="member-form" id="formOtp" autocomplete="off">
+                <div class="input-group">
+                    <input type="text" id="otpInput" placeholder=" " required maxlength="6" pattern="[0-9]{6}" style="text-align: center; font-family: monospace; font-size: 18px; letter-spacing: 4px;">
+                    <label>ENTER 6-DIGIT CODE</label>
+                </div>
+                <div class="member-action">
+                    <div class="magnetic-wrap">
+                        <button type="submit" class="magnetic-btn">VERIFY CODE</button>
+                    </div>
+                    <p id="otpTimer" style="font-size: 10px; color: rgba(26,26,26,0.4); margin-top: 15px; letter-spacing: 1px; text-align: center;">
+                        RESEND CODE IN <span id="cooldownNum">60</span>S
+                    </p>
+                </div>
+            </form>
+
+            <form class="member-form" id="formRegister" method="POST">
+                <input type="hidden" name="_subject" value="【HELL 2 OVER】全新尊榮席位申請">
+                <input type="hidden" id="registerEmailHidden" name="email">
+                
+                <div class="input-group">
+                    <input type="text" name="name" placeholder=" " required autocomplete="name">
+                    <label>YOUR NAME (尊稱)</label>
+                </div>
+
+                <div class="input-group">
+                    <input type="tel" name="phone" placeholder=" " required autocomplete="tel" pattern="[0-9]{9,15}">
+                    <label>MOBILE NUMBER (行動電話)</label>
+                </div>
+
+                <div class="member-action">
+                    <div class="magnetic-wrap">
+                        <button type="submit" class="magnetic-btn">COMPLETE REGISTRATION</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="custom-toast" id="toastMsg">系統訊息</div>
+
+<script>
+const FORMSPREE_URL = "https://formspree.io/f/mnjyyqlk";
+const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+let bgNoiseNode = null;
+let isAudioOn = false;
+
+function createBackgroundNoise() {
+    const bufferSize = 2 * audioCtx.sampleRate;
+    const noiseBuffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+    const output = noiseBuffer.getChannelData(0);
+    for (let i = 0; i < bufferSize; i++) { output[i] = Math.random() * 2 - 1; }
+    const whiteNoise = audioCtx.createBufferSource(); whiteNoise.buffer = noiseBuffer; whiteNoise.loop = true;
+    const filter = audioCtx.createBiquadFilter(); filter.type = 'lowpass'; filter.frequency.value = 400; 
+    const gainNode = audioCtx.createGain(); gainNode.gain.value = 0.015;
+    whiteNoise.connect(filter); filter.connect(gainNode); gainNode.connect(audioCtx.destination);
+    return whiteNoise;
+}
+
+function playClickSound() {
+    if (!isAudioOn) return;
+    if (audioCtx.state === 'suspended') audioCtx.resume();
+    const osc = audioCtx.createOscillator(); const gainNode = audioCtx.createGain();
+    osc.type = 'sine'; osc.frequency.setValueAtTime(1200, audioCtx.currentTime);
+    osc.frequency.exponentialRampToValueAtTime(300, audioCtx.currentTime + 0.08);
+    gainNode.gain.setValueAtTime(0.04, audioCtx.currentTime);
+    gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.08);
+    osc.connect(gainNode); gainNode.connect(audioCtx.destination);
+    osc.start(); osc.stop(audioCtx.currentTime + 0.08);
+}
+
+document.getElementById('audioToggle').addEventListener('click', function(e) {
+    e.stopPropagation();
+    if (audioCtx.state === 'suspended') audioCtx.resume();
+    if (!isAudioOn) {
+        bgNoiseNode = createBackgroundNoise(); bgNoiseNode.start();
+        this.innerText = "AUDIO ON"; isAudioOn = true;
+    } else {
+        if (bgNoiseNode) bgNoiseNode.stop();
+        this.innerText = "AUDIO OFF"; isAudioOn = false;
+    }
+});
+
+/* 手機版選單邏輯 */
+const menuToggle = document.getElementById('menuToggle');
+const navMenu = document.getElementById('navMenu');
+
+function closeMenu() {
+    if(menuToggle && navMenu) {
+        menuToggle.classList.remove('active');
+        navMenu.classList.remove('active');
+    }
+}
+
+if(menuToggle && navMenu) {
+    menuToggle.addEventListener('click', (e) => {
+        e.stopPropagation();
+        menuToggle.classList.toggle('active');
+        navMenu.classList.toggle('active');
+    });
+    
+    document.addEventListener('click', (e) => {
+        if(navMenu.classList.contains('active') && !navMenu.contains(e.target) && !menuToggle.contains(e.target)) {
+            closeMenu();
+        }
+    });
+}
+
+document.querySelectorAll('.navItem').forEach(item => {
+    item.addEventListener('click', closeMenu);
+});
+
+const navItems = document.querySelectorAll('.navItem:not(#navMemberBtn)');
+const scrollSections = document.querySelectorAll('section[id]');
+window.addEventListener('scroll', () => {
+    let currentId = "";
+    scrollSections.forEach(section => {
+        const sectionTop = section.offsetTop;
+        if (pageYOffset >= sectionTop - 200) { currentId = section.getAttribute('id'); }
+    });
+    navItems.forEach(item => {
+        item.classList.remove('active');
+        if (item.getAttribute('href').includes(currentId) && currentId !== "") { item.classList.add('active'); }
+    });
+});
+
+/* 游標動態優化 */
+if (window.innerWidth > 768) {
+    const cursorDot = document.getElementById("cursorDot");
+    const cursorOutline = document.getElementById("cursorOutline");
+    let mouseX = 0, mouseY = 0, dotX = 0, dotY = 0, outlineX = 0, outlineY = 0;
+
+    document.addEventListener("mousemove", (e) => { mouseX = e.clientX; mouseY = e.clientY; });
+
+    function animateCursor() {
+        dotX += (mouseX - dotX) * 0.3; dotY += (mouseY - dotY) * 0.3;
+        outlineX += (mouseX - outlineX) * 0.12; outlineY += (mouseY - outlineY) * 0.12;
+        if(cursorDot) { cursorDot.style.left = `${dotX}px`; cursorDot.style.top = `${dotY}px`; }
+        if(cursorOutline) { cursorOutline.style.left = `${outlineX}px`; cursorOutline.style.top = `${outlineY}px`; }
+        document.documentElement.style.setProperty('--x', `${mouseX}px`);
+        document.documentElement.style.setProperty('--y', `${mouseY}px`);
+        requestAnimationFrame(animateCursor);
+    }
+    requestAnimationFrame(animateCursor);
+
+    const body = document.body;
+    function applyCursorHover(selector) {
+        document.querySelectorAll(selector).forEach(elem => {
+            elem.addEventListener("mouseenter", () => { body.classList.add("cursor-hover"); playClickSound(); });
+            elem.addEventListener("mouseleave", () => body.classList.remove("cursor-hover"));
+        });
+    }
+    
+    applyCursorHover("button, span, a, .card-single, .ecoCard, .audio-toggle, .magnetic-btn-link, .modal-close, input, .member-subtitle strong");
+
+    document.querySelectorAll('.magnetic-wrap').forEach(wrap => {
+        const btn = wrap.querySelector('.magnetic-btn, .magnetic-btn-link');
+        if (!btn) return;
+        wrap.addEventListener('mousemove', (e) => {
+            const boundBox = wrap.getBoundingClientRect();
+            const mX = e.clientX - boundBox.left - boundBox.width / 2;
+            const mY = e.clientY - boundBox.top - boundBox.height / 2;
+            btn.style.transform = `translate(${mX * 0.35}px, ${mY * 0.35}px)`;
+        });
+        wrap.addEventListener('mouseleave', () => {
+            btn.style.transform = `translate(0px, 0px)`;
+            btn.style.transition = 'transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)';
+        });
+        wrap.addEventListener('mouseenter', () => { btn.style.transition = 'none'; });
+    });
+}
+
+function showToast(message) {
+    const toast = document.getElementById('toastMsg');
+    toast.classList.add('show');
+    toast.innerText = message;
+    setTimeout(() => { toast.classList.remove('show'); }, 3500);
+}
+
+/* 品牌初衷彈窗 */
+const openManifestoBtn = document.getElementById('openManifestoBtn');
+const closeManifestoBtn = document.getElementById('closeManifestoBtn');
+const manifestoModal = document.getElementById('manifestoModal');
+
+if (openManifestoBtn && closeManifestoBtn && manifestoModal) {
+    openManifestoBtn.addEventListener('click', () => { manifestoModal.classList.add('active'); document.body.style.overflow = 'hidden'; });
+    closeManifestoBtn.addEventListener('click', () => { manifestoModal.classList.remove('active'); document.body.style.overflow = ''; });
+}
+
+/* ===== 真實 OTP 認證控制中心 ===== */
+const navMemberBtn = document.getElementById('navMemberBtn');
+const footerSubTrigger = document.getElementById('footerSubTrigger');
+const closeMemberBtn = document.getElementById('closeMemberBtn');
+const memberModal = document.getElementById('memberModal');
+
+const memberModalTitle = document.getElementById('memberModalTitle');
+const memberModalSubtitle = document.getElementById('memberModalSubtitle');
+const memberFormWrapper = document.getElementById('memberFormWrapper');
+
+const formVerify = document.getElementById('formVerify');
+const formOtp = document.getElementById('formOtp');
+const formRegister = document.getElementById('formRegister');
+
+const verifyEmailInput = document.getElementById('verifyEmailInput');
+const otpInput = document.getElementById('otpInput');
+const registerEmailHidden = document.getElementById('registerEmailHidden');
+
+const cooldownNum = document.getElementById('cooldownNum');
+const otpTimer = document.getElementById('otpTimer');
+
+const footerSubText = document.getElementById('footerSubText');
+const footerSubInput = document.getElementById('footerSubInput');
+const footerSubBtn = document.getElementById('footerSubBtn');
+
+let serverSecurityToken = ""; 
+let cooldownInterval = null;
+
+if (!localStorage.getItem('H2O_MEMBERS')) {
+    localStorage.setItem('H2O_MEMBERS', JSON.stringify(['vip@hell2over.com', 'test@test.com']));
+}
+
+function updateLoginVisualState() {
+    const isLoggedValue = localStorage.getItem('H2O_LOGGED_IN_USER');
+    
+    if (isLoggedValue) {
+        if (navMemberBtn) {
+            navMemberBtn.innerText = "STATUS: ACTIVE";
+            navMemberBtn.classList.add('loggedin-status');
+        }
+        if (footerSubText) footerSubText.innerHTML = "洗鍊席位已開通，<strong>情報發送中</strong>";
+        if (footerSubInput) {
+            footerSubInput.value = isLoggedValue.toUpperCase();
+            footerSubInput.style.color = "#dfb76c";
+        }
+        if (footerSubBtn) {
+            footerSubBtn.innerText = "✓";
+            footerSubBtn.style.color = "#dfb76c";
+        }
+    } else {
+        if (navMemberBtn) {
+            navMemberBtn.innerText = "JOIN";
+            navMemberBtn.classList.remove('loggedin-status');
+        }
+        if (footerSubText) footerSubText.innerText = "加入洗鍊席位，優先獲取首發情報";
+        if (footerSubInput) { footerSubInput.value = ""; footerSubInput.placeholder = "YOUR EMAIL"; footerSubInput.style.color = ""; }
+        if (footerSubBtn) { footerSubBtn.innerText = "→"; footerSubBtn.style.color = ""; }
+    }
+}
+
+function handleLogout() {
+    localStorage.removeItem('H2O_LOGGED_IN_USER');
+    showToast('已安全退出席位，洗鍊狀態已解除。');
+    updateLoginVisualState();
+}
+
+function startOtpCooldown() {
+    let seconds = 60;
+    cooldownNum.innerText = seconds;
+    otpTimer.innerHTML = `RESEND CODE IN <span id="cooldownNum">${seconds}</span>S`;
+    
+    clearInterval(cooldownInterval);
+    cooldownInterval = setInterval(() => {
+        seconds--;
+        const numEl = document.getElementById('cooldownNum');
+        if(numEl) numEl.innerText = seconds;
+        if (seconds <= 0) {
+            clearInterval(cooldownInterval);
+            otpTimer.innerHTML = `<span id="resendOtpBtn" style="color:#dfb76c; cursor:pointer; text-decoration:underline; font-weight:600;">RESEND CODE</span>`;
+            document.getElementById('resendOtpBtn').addEventListener('click', () => {
+                requestEmailOtp(verifyEmailInput.value.trim());
+            });
+        }
+    }, 1000);
+}
+
+async function requestEmailOtp(email) {
+    try {
+        const response = await fetch('/api/send-otp', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email })
+        });
+        const data = await response.json();
+        
+        if (response.ok && data.token) {
+            serverSecurityToken = data.token; 
+            showToast('動態認證碼已發送至您的信箱，請查收。');
+            
+            if(memberFormWrapper) memberFormWrapper.style.height = "160px";
+            formVerify.classList.remove('active');
+            formRegister.classList.remove('active');
+            formOtp.classList.add('active');
+            startOtpCooldown();
+        } else {
+            showToast('系統提示：' + (data.error || '無法發送認證信，請檢查信箱格式。'));
+        }
+    } catch (err) {
+        showToast('網路中斷或通訊異常，無法連線至 H2O 認證伺服器。');
+    }
+}
+
+function openMemberModal(initialEmail = "") {
+    if (localStorage.getItem('H2O_LOGGED_IN_USER')) { handleLogout(); return; }
+
+    memberModal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+    
+    memberModalTitle.innerText = "VERIFY ACCESS";
+    memberModalSubtitle.innerHTML = "輸入獲邀信箱以驗證洗鍊資格。<br><strong>會員皆可提前獲取全球首發限定情報。</strong>";
+    if(memberFormWrapper) memberFormWrapper.style.height = "120px";
+    formRegister.classList.remove('active');
+    formOtp.classList.remove('active');
+    formVerify.classList.add('active');
+    formVerify.reset();
+    formOtp.reset();
+    formRegister.reset();
+
+    if(initialEmail) { verifyEmailInput.value = initialEmail; }
+}
+
+if (navMemberBtn) navMemberBtn.addEventListener('click', (e) => { e.preventDefault(); openMemberModal(); });
+
+if (footerSubTrigger) {
+    footerSubTrigger.addEventListener('click', (e) => {
+        if (localStorage.getItem('H2O_LOGGED_IN_USER')) { handleLogout(); return; }
+        const userTyped = footerSubInput.value.trim();
+        openMemberModal(userTyped);
+    });
+}
+
+if (closeMemberBtn) {
+    closeMemberBtn.addEventListener('click', () => { 
+        memberModal.classList.remove('active'); 
+        document.body.style.overflow = ''; 
+        clearInterval(cooldownInterval);
+    });
+}
+
+// 階段一：驗證表單觸發發信
+if (formVerify) {
+    formVerify.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const emailValue = verifyEmailInput.value.trim().toLowerCase();
+        if(!emailValue) return;
+
+        const btn = formVerify.querySelector('button');
+        const originalText = btn.innerText;
+        btn.innerText = 'REQUESTING...';
+        btn.style.pointerEvents = 'none';
+
+        await requestEmailOtp(emailValue);
+        
+        btn.innerText = originalText;
+        btn.style.pointerEvents = 'auto';
+    });
+}
+
+// 階段一點五：驗證碼真實核對
+if (formOtp) {
+    formOtp.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const userOtp = otpInput.value.trim();
+        const emailValue = verifyEmailInput.value.trim().toLowerCase();
+
+        const btn = formOtp.querySelector('button');
+        btn.innerText = 'VERIFYING...';
+        btn.style.pointerEvents = 'none';
+
+        try {
+            const response = await fetch('/api/verify-otp', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email: emailValue, otp: userOtp, token: serverSecurityToken })
+            });
+            const data = await response.json();
+
+            if (response.ok && data.success) {
+                clearInterval(cooldownInterval);
+                
+                const currentMembers = JSON.parse(localStorage.getItem('H2O_MEMBERS')) || [];
+                if (currentMembers.includes(emailValue)) {
+                    showToast('認證密鑰吻合。席位已成功開通。');
+                    localStorage.setItem('H2O_LOGGED_IN_USER', emailValue);
+                    updateLoginVisualState();
+                    formOtp.reset();
+                    setTimeout(() => { memberModal.classList.remove('active'); document.body.style.overflow = ''; }, 2000);
+                } else {
+                    showToast('憑證有效。請填寫您的尊榮席位檔案。');
+                    memberModalTitle.innerText = "JOIN THE LUXURY";
+                    memberModalSubtitle.innerHTML = "此信箱尚未建立席位。請留下您的尊稱與電話完成辦理。";
+                    registerEmailHidden.value = emailValue;
+                    
+                    if(memberFormWrapper) memberFormWrapper.style.height = "240px";
+                    formOtp.classList.remove('active');
+                    formRegister.classList.add('active');
+                }
+            } else {
+                showToast('認證錯誤：' + (data.error || '驗證碼不正確或已過期。'));
+                otpInput.value = "";
+            }
+        } catch (err) {
+            showToast('伺服器阻斷或連線逾時，核對失敗。');
+        } finally {
+            btn.innerText = 'VERIFY CODE';
+            btn.style.pointerEvents = 'auto';
+        }
+    });
+}
+
+// 階段二：新會員補填資料 (全新相容 Localhost 跨域表單提交優化版)
+if (formRegister) {
+    formRegister.addEventListener('submit', function(e) {
+        const btn = formRegister.querySelector('button');
+        btn.innerText = 'SAVING ARCHIVE...';
+        btn.style.pointerEvents = 'none';
+
+        // 1. 同步更新前端暫存資料庫
+        const registeredEmail = registerEmailHidden.value.trim().toLowerCase();
+        const currentMembers = JSON.parse(localStorage.getItem('H2O_MEMBERS')) || [];
+        if (!currentMembers.includes(registeredEmail)) {
+            currentMembers.push(registeredEmail);
+            localStorage.setItem('H2O_MEMBERS', JSON.stringify(currentMembers));
+        }
+        
+        // 2. 登錄狀態授權
+        localStorage.setItem('H2O_LOGGED_IN_USER', registeredEmail);
+
+        // 3. 改用標準 Action 跳轉提交，百分之百解決本地端 CORS 被拒絕的問題
+        formRegister.action = FORMSPREE_URL;
+        showToast('尊榮席位辦理成功！權益已即刻生效。');
+    });
+}
+
+updateLoginVisualState();
+
+/* 滾動淡入 */
+const observerOptions = { root: null, threshold: 0.15, rootMargin: "0px 0px -50px 0px" };
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => { 
+        if (entry.isIntersecting) { entry.target.classList.add("show"); observer.unobserve(entry.target); } 
+    });
+}, observerOptions);
+
+document.querySelectorAll(".story, .manifestoGroup, .products-single-wrapper, .ecoGroup, .teaserGroup").forEach(el => observer.observe(el));
+
+window.addEventListener('load', () => { 
+    setTimeout(() => { 
+        document.body.classList.remove("loading");
+        const loaderDom = document.querySelector('.loader');
+        if (loaderDom) { loaderDom.style.display = 'none'; loaderDom.remove(); }
+    }, 3500); 
+});
+
+/* 倒數計時 */
+const targetDate = new Date("2026-12-31T00:00:00").getTime();
+function updateCountdown(){
+    const now = new Date().getTime(); const distance = targetDate - now;
+    if (distance < 0) { document.querySelectorAll(".timeBox span").forEach(el => el.innerText = "00"); return; }
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+    
+    const dEl = document.getElementById("days"); const hEl = document.getElementById("hours");
+    const mEl = document.getElementById("minutes"); const sEl = document.getElementById("seconds");
+    
+    if(dEl) dEl.innerText = String(days).padStart(2, "0");
+    if(hEl) hEl.innerText = String(hours).padStart(2, "0");
+    if(mEl) mEl.innerText = String(minutes).padStart(2, "0");
+    if(sEl) sEl.innerText = String(seconds).padStart(2, "0");
+}
+setInterval(updateCountdown, 1000); updateCountdown();
+</script>
+</body>
+</html>

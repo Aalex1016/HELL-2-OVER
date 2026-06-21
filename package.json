@@ -1,0 +1,17 @@
+{
+  "name": "hell-2-over-4",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "nodemailer": "^6.9.9",
+    "stripe": "^22.2.0"
+  }
+}

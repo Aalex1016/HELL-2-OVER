@@ -114,7 +114,7 @@ nav{
 }
 .logo:hover { opacity: 0.7; }
 .navRight{ display: flex; gap: 30px; font-size: 11px; letter-spacing: 4px; align-items: center; }
-.navLinks { display: flex; gap: 25px; }
+.navLinks { display: flex; gap: 25px; align-items: center; }
 .navLinks a {
     color: rgba(26, 26, 26, 0.6); text-decoration: none; transition: color 0.3s; position: relative; padding-bottom: 4px;
 }
@@ -125,16 +125,19 @@ nav{
 }
 .navLinks a.active::after { width: 100%; }
 
-/* 已登錄狀態特殊視覺樣式與登出虛擬提示 */
-.navLinks a#navMemberBtn.loggedin-status {
-    color: #dfb76c; font-weight: 600; text-shadow: 0 0 10px rgba(223, 183, 108, 0.3);
+/* 會員啟動狀態專屬視覺 */
+.navLinks a.loggedin-status {
+    color: #dfb76c; font-weight: 600; text-shadow: 0 0 10px rgba(223, 183, 108, 0.3); pointer-events: none;
 }
-.navLinks a#navMemberBtn.loggedin-status::after {
-    width: 100%; background: linear-gradient(90deg, #dfb76c, transparent);
+.navLinks a.loggedin-status::after { width: 100%; background: #dfb76c; }
+
+.navLinks a#navLogoutBtn {
+    color: rgba(26, 26, 26, 0.4); font-weight: 400;
 }
-.navLinks a#navMemberBtn.loggedin-status:hover {
-    color: #ff6b6b; text-shadow: 0 0 10px rgba(255, 107, 107, 0.4);
+.navLinks a#navLogoutBtn:hover {
+    color: #ff6b6b;
 }
+.navLinks a#navLogoutBtn::after { background: #ff6b6b; }
 
 .audio-toggle {
     font-family: monospace; font-size: 10px; border: 1px solid rgba(223,183,108,0.4);
@@ -534,7 +537,10 @@ footer p{ margin-top: 60px; font-size: 11px; letter-spacing: 2px; color: rgba(26
             <li><a href="#manifesto" class="navItem">PHILOSOPHY</a></li>
             <li><a href="#products" class="navItem">PRODUCTS</a></li>
             <li><a href="#eco" class="navItem">SUSTAINABILITY</a></li>
-            <li><a href="javascript:void(0);" class="navItem" id="navMemberBtn">JOIN</a></li>
+            <li><a href="javascript:void(0);" class="navItem" id="navStatusActiveBtn" style="display:none;">STATUS: ACTIVE</a></li>
+            <li><a href="javascript:void(0);" class="navItem" id="navSignInBtn">SIGN IN</a></li>
+            <li><a href="javascript:void(0);" class="navItem" id="navRegisterBtn">REGISTER</a></li>
+            <li><a href="javascript:void(0);" class="navItem" id="navLogoutBtn" style="display:none;">SIGN OUT</a></li>
         </ul>
         <div class="audio-toggle" id="audioToggle">AUDIO OFF</div>
     </div>
@@ -739,7 +745,6 @@ footer p{ margin-top: 60px; font-size: 11px; letter-spacing: 2px; color: rgba(26
             </form>
 
             <form class="member-form" id="formRegister" method="POST">
-                <input type="hidden" name="_subject" value="【HELL 2 OVER】全新尊榮席位申請">
                 <input type="hidden" id="registerEmailHidden" name="email">
                 
                 <div class="input-group">
@@ -765,7 +770,6 @@ footer p{ margin-top: 60px; font-size: 11px; letter-spacing: 2px; color: rgba(26
 <div class="custom-toast" id="toastMsg">系統訊息</div>
 
 <script>
-const FORMSPREE_URL = "https://formspree.io/f/mnjyyqlk";
 const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 let bgNoiseNode = null;
 let isAudioOn = false;
@@ -835,7 +839,7 @@ document.querySelectorAll('.navItem').forEach(item => {
     item.addEventListener('click', closeMenu);
 });
 
-const navItems = document.querySelectorAll('.navItem:not(#navMemberBtn)');
+const navItems = document.querySelectorAll('.navItem:not(#navSignInBtn):not(#navRegisterBtn):not(#navLogoutBtn):not(#navStatusActiveBtn)');
 const scrollSections = document.querySelectorAll('section[id]');
 window.addEventListener('scroll', () => {
     let currentId = "";
@@ -912,8 +916,12 @@ if (openManifestoBtn && closeManifestoBtn && manifestoModal) {
     closeManifestoBtn.addEventListener('click', () => { manifestoModal.classList.remove('active'); document.body.style.overflow = ''; });
 }
 
-/* ===== 真實 OTP 認證控制中心 ===== */
-const navMemberBtn = document.getElementById('navMemberBtn');
+/* ===== 真實 OTP 權限核心主機 ===== */
+const navSignInBtn = document.getElementById('navSignInBtn');
+const navRegisterBtn = document.getElementById('navRegisterBtn');
+const navStatusActiveBtn = document.getElementById('navStatusActiveBtn');
+const navLogoutBtn = document.getElementById('navLogoutBtn');
+
 const footerSubTrigger = document.getElementById('footerSubTrigger');
 const closeMemberBtn = document.getElementById('closeMemberBtn');
 const memberModal = document.getElementById('memberModal');
@@ -939,19 +947,18 @@ const footerSubBtn = document.getElementById('footerSubBtn');
 
 let serverSecurityToken = ""; 
 let cooldownInterval = null;
-
-if (!localStorage.getItem('H2O_MEMBERS')) {
-    localStorage.setItem('H2O_MEMBERS', JSON.stringify(['vip@hell2over.com', 'test@test.com']));
-}
+let forcedRegisterFlow = false; // 是否強制切換到註冊管道的狀態標記
 
 function updateLoginVisualState() {
     const isLoggedValue = localStorage.getItem('H2O_LOGGED_IN_USER');
     
     if (isLoggedValue) {
-        if (navMemberBtn) {
-            navMemberBtn.innerText = "STATUS: ACTIVE";
-            navMemberBtn.classList.add('loggedin-status');
-        }
+        // 已登入：隱藏登入註冊，開啟 ACTIVE 與 SIGN OUT 按鈕
+        if (navStatusActiveBtn) { navStatusActiveBtn.style.display = "inline-block"; navStatusActiveBtn.classList.add('loggedin-status'); }
+        if (navLogoutBtn) { navLogoutBtn.style.display = "inline-block"; }
+        if (navSignInBtn) { navSignInBtn.style.display = "none"; }
+        if (navRegisterBtn) { navRegisterBtn.style.display = "none"; }
+        
         if (footerSubText) footerSubText.innerHTML = "洗鍊席位已開通，<strong>情報發送中</strong>";
         if (footerSubInput) {
             footerSubInput.value = isLoggedValue.toUpperCase();
@@ -962,10 +969,12 @@ function updateLoginVisualState() {
             footerSubBtn.style.color = "#dfb76c";
         }
     } else {
-        if (navMemberBtn) {
-            navMemberBtn.innerText = "JOIN";
-            navMemberBtn.classList.remove('loggedin-status');
-        }
+        // 未登入：開啟登入註冊，隱藏 ACTIVE 與 SIGN OUT 按鈕
+        if (navStatusActiveBtn) { navStatusActiveBtn.style.display = "none"; }
+        if (navLogoutBtn) { navLogoutBtn.style.display = "none"; }
+        if (navSignInBtn) { navSignInBtn.style.display = "inline-block"; }
+        if (navRegisterBtn) { navRegisterBtn.style.display = "inline-block"; }
+        
         if (footerSubText) footerSubText.innerText = "加入洗鍊席位，優先獲取首發情報";
         if (footerSubInput) { footerSubInput.value = ""; footerSubInput.placeholder = "YOUR EMAIL"; footerSubInput.style.color = ""; }
         if (footerSubBtn) { footerSubBtn.innerText = "→"; footerSubBtn.style.color = ""; }
@@ -973,9 +982,11 @@ function updateLoginVisualState() {
 }
 
 function handleLogout() {
-    localStorage.removeItem('H2O_LOGGED_IN_USER');
-    showToast('已安全退出席位，洗鍊狀態已解除。');
-    updateLoginVisualState();
+    if (confirm('確定要退出目前的尊榮席位狀態嗎？')) {
+        localStorage.removeItem('H2O_LOGGED_IN_USER');
+        showToast('已安全退出席位，洗鍊狀態已解除。');
+        updateLoginVisualState();
+    }
 }
 
 function startOtpCooldown() {
@@ -1024,14 +1035,19 @@ async function requestEmailOtp(email) {
     }
 }
 
-function openMemberModal(initialEmail = "") {
-    if (localStorage.getItem('H2O_LOGGED_IN_USER')) { handleLogout(); return; }
-
+function openMemberModal(initialEmail = "", forceRegister = false) {
+    forcedRegisterFlow = forceRegister;
     memberModal.classList.add('active');
     document.body.style.overflow = 'hidden';
     
-    memberModalTitle.innerText = "VERIFY ACCESS";
-    memberModalSubtitle.innerHTML = "輸入獲邀信箱以驗證洗鍊資格。<br><strong>會員皆可提前獲取全球首發限定情報。</strong>";
+    if (forcedRegisterFlow) {
+        memberModalTitle.innerText = "REGISTER ACCOUNT";
+        memberModalSubtitle.innerHTML = "請輸入您欲創辦尊榮席位的信箱。<br><strong>新創帳號將於核對身分後自動綁定。</strong>";
+    } else {
+        memberModalTitle.innerText = "VERIFY ACCESS";
+        memberModalSubtitle.innerHTML = "輸入獲邀信箱以驗證洗鍊資格。<br><strong>會員皆可提前獲取全球首發限定情報。</strong>";
+    }
+    
     if(memberFormWrapper) memberFormWrapper.style.height = "120px";
     formRegister.classList.remove('active');
     formOtp.classList.remove('active');
@@ -1043,13 +1059,15 @@ function openMemberModal(initialEmail = "") {
     if(initialEmail) { verifyEmailInput.value = initialEmail; }
 }
 
-if (navMemberBtn) navMemberBtn.addEventListener('click', (e) => { e.preventDefault(); openMemberModal(); });
+if (navSignInBtn) navSignInBtn.addEventListener('click', (e) => { e.preventDefault(); openMemberModal("", false); });
+if (navRegisterBtn) navRegisterBtn.addEventListener('click', (e) => { e.preventDefault(); openMemberModal("", true); });
+if (navLogoutBtn) navLogoutBtn.addEventListener('click', (e) => { e.preventDefault(); handleLogout(); });
 
 if (footerSubTrigger) {
     footerSubTrigger.addEventListener('click', (e) => {
         if (localStorage.getItem('H2O_LOGGED_IN_USER')) { handleLogout(); return; }
         const userTyped = footerSubInput.value.trim();
-        openMemberModal(userTyped);
+        openMemberModal(userTyped, false);
     });
 }
 
@@ -1080,7 +1098,7 @@ if (formVerify) {
     });
 }
 
-// 階段一點五：驗證碼真實核對
+// 階段一點五：驗證碼真實核對 (智慧對接老會員登入 / 新會員註冊)
 if (formOtp) {
     formOtp.addEventListener('submit', async function(e) {
         e.preventDefault();
@@ -1102,15 +1120,17 @@ if (formOtp) {
             if (response.ok && data.success) {
                 clearInterval(cooldownInterval);
                 
-                const currentMembers = JSON.parse(localStorage.getItem('H2O_MEMBERS')) || [];
-                if (currentMembers.includes(emailValue)) {
-                    showToast('認證密鑰吻合。席位已成功開通。');
+                // 🎯 核心升級：交給後端比對 MySQL 資料庫後傳回的 flag 判定
+                if (data.isExistingMember && !forcedRegisterFlow) {
+                    // 老會員：直接放行登入，就地安全開通
+                    showToast(`歡迎歸位，尊貴的 ${data.user.name || '洗鍊靈魂'}。席位已成功開通。`);
                     localStorage.setItem('H2O_LOGGED_IN_USER', emailValue);
                     updateLoginVisualState();
                     formOtp.reset();
                     setTimeout(() => { memberModal.classList.remove('active'); document.body.style.overflow = ''; }, 2000);
                 } else {
-                    showToast('憑證有效。請填寫您的尊榮席位檔案。');
+                    // 新會員（或點擊 REGISTER 進入）：開啟補填資料表單
+                    showToast('憑證有效。請進一步完善您的尊榮席位檔案。');
                     memberModalTitle.innerText = "JOIN THE LUXURY";
                     memberModalSubtitle.innerHTML = "此信箱尚未建立席位。請留下您的尊稱與電話完成辦理。";
                     registerEmailHidden.value = emailValue;
@@ -1132,27 +1152,57 @@ if (formOtp) {
     });
 }
 
-// 階段二：新會員補填資料 (全新相容 Localhost 跨域表單提交優化版)
+// 階段二：新會員補填資料 (完美的非同步對接 MySQL 後端 API，就地寫入，拒絕網頁外跳)
 if (formRegister) {
-    formRegister.addEventListener('submit', function(e) {
+    formRegister.addEventListener('submit', async function(e) {
+        e.preventDefault(); 
+        
         const btn = formRegister.querySelector('button');
+        const originalBtnText = btn.innerText;
+        const registeredEmail = registerEmailHidden.value.trim().toLowerCase();
+        
+        // 抓取前端填寫的姓名與電話
+        const nameValue = formRegister.querySelector('input[name="name"]').value;
+        const phoneValue = formRegister.querySelector('input[name="phone"]').value;
+        
         btn.innerText = 'SAVING ARCHIVE...';
         btn.style.pointerEvents = 'none';
 
-        // 1. 同步更新前端暫存資料庫
-        const registeredEmail = registerEmailHidden.value.trim().toLowerCase();
-        const currentMembers = JSON.parse(localStorage.getItem('H2O_MEMBERS')) || [];
-        if (!currentMembers.includes(registeredEmail)) {
-            currentMembers.push(registeredEmail);
-            localStorage.setItem('H2O_MEMBERS', JSON.stringify(currentMembers));
-        }
-        
-        // 2. 登錄狀態授權
-        localStorage.setItem('H2O_LOGGED_IN_USER', registeredEmail);
+        try {
+            // 🎯 對接自己剛寫好的 Vercel 後端 MySQL 寫入路由 api/register.js
+            const response = await fetch('/api/register', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    name: nameValue,
+                    email: registeredEmail,
+                    phone: phoneValue
+                })
+            });
+            
+            const data = await response.json();
 
-        // 3. 改用標準 Action 跳轉提交，百分之百解決本地端 CORS 被拒絕的問題
-        formRegister.action = FORMSPREE_URL;
-        showToast('尊榮席位辦理成功！權益已即刻生效。');
+            if (response.ok && data.success) {
+                showToast('尊榮席位辦理成功！權益已即刻同步至 MySQL。');
+                
+                // 本地端發放登入憑證
+                localStorage.setItem('H2O_LOGGED_IN_USER', registeredEmail);
+                
+                // 即時亮燈變更導覽列 UI 狀態
+                updateLoginVisualState();
+                formRegister.reset();
+                
+                setTimeout(() => { memberModal.classList.remove('active'); document.body.style.overflow = ''; }, 2000);
+            } else {
+                showToast('註冊建檔失敗：' + (data.error || '無法寫入雲端伺服器'));
+            }
+            
+        } catch (error) {
+            showToast('通訊異常：無法連線至雲端免費核心。');
+        } finally {
+            btn.innerText = originalBtnText;
+            btn.style.pointerEvents = 'auto';
+        }
     });
 }
 

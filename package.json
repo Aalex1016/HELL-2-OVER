@@ -11,6 +11,7 @@
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
+    "mysql2": "^3.22.5",
     "nodemailer": "^6.9.9",
     "stripe": "^22.2.0"
   }

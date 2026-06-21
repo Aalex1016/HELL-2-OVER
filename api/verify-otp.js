@@ -1,4 +1,5 @@
 import crypto from 'crypto';
+import mysql from 'mysql2/promise'; // 🎯 引入免費的 MySQL 連線驅動
 
 // 必須與 send-otp.js 使用完全相同的金鑰
 const ENCRYPTION_KEY = process.env.H2O_SECRET_KEY || 'hell2over_luxury_secret_key_32bytes';
@@ -28,7 +29,7 @@ export default async function handler(req, res) {
     if (!email || !otp || !token) { return res.status(400).json({ error: 'Missing required parameters' }); }
 
     try {
-        // 解密前端送回的 Token
+        // 1. 解密前端送回的 Token
         const decrypted = decryptToken(token);
 
         // 安全校驗 1：防止惡意竄改比對的信箱
@@ -46,8 +47,45 @@ export default async function handler(req, res) {
             return res.status(400).json({ error: 'Incorrect verification code.' });
         }
 
-        // 全數通過！
-        return res.status(200).json({ success: true });
+        // ==========================================
+        // 🚀 核心升級：全數通過後，串接 MySQL 檢查會員狀態
+        // ==========================================
+        const cleanEmail = email.trim().toLowerCase();
+        let connection;
+
+        try {
+            // 從 Vercel 環境變數連線到 TiDB Cloud
+            connection = await mysql.createConnection(process.env.DATABASE_URL);
+
+            // 執行真實 SQL：去 users 表撈看看這個信箱有沒有資料
+            const [rows] = await connection.execute(
+                'SELECT * FROM users WHERE email = ?',
+                [cleanEmail]
+            );
+
+            if (rows.length > 0) {
+                // 【老會員】資料庫裡有資料，直接通知前端放行登入
+                return res.status(200).json({
+                    success: true,
+                    isExistingMember: true,
+                    message: 'Welcome back. Verification successful.',
+                    user: { name: rows[0].name, email: rows[0].email }
+                });
+            } else {
+                // 【新會員】資料庫是空的，通知前端切換到註冊表單
+                return res.status(200).json({
+                    success: true,
+                    isExistingMember: false,
+                    message: 'New archive detected. Please complete registration.'
+                });
+            }
+
+        } catch (dbError) {
+            console.error('MySQL Error:', dbError);
+            return res.status(500).json({ error: 'Database database connection error.' });
+        } finally {
+            if (connection) await connection.end(); // 💡 確保每次都優雅釋放連線
+        }
 
     } catch (error) {
         return res.status(400).json({ error: 'Invalid or corrupted security token.' });

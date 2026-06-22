@@ -8,7 +8,7 @@
 <meta property="og:type" content="website">
 <meta property="og:title" content="HELL 2 OVER | EXPERIENCE">
 <meta property="og:description" content="體驗屬於你的步調，純淨曜白與高奢流金交織。喝下的不只是水，而是情緒。">
-<meta property="og:image" content="https://hell-2-over.vercel.app/H2O.FINAL.png">
+<meta property="og:image" content="https://hell-2-over.vercel.app/H2O_FINAL.jpg">
 
 <style>
 /* ===== RESET & BASE ===== */
@@ -151,6 +151,100 @@ nav{
 }
 .menu-toggle span {
     display: block; width: 22px; height: 2px; background: #dfb76c; transition: transform 0.3s, opacity 0.3s;
+}
+
+/* =======================================================
+   🔥 LIQUID DEATH STYLE OPENING STAGE (極致滿版舞台廣告圖區)
+   ======================================================= */
+.luxe-hero-stage {
+    width: 100vw; margin-top: 75px; 
+    position: relative; overflow: hidden; background: #000000;
+    scroll-snap-align: start; scroll-snap-stop: always;
+}
+.luxe-hero-stage .main-banner-link {
+    display: block; width: 100%; height: 100%; position: relative;
+}
+.luxe-hero-stage img.stage-full-poster {
+    width: 100vw; height: auto; min-height: 55vh; max-height: 85vh;
+    object-fit: cover; display: block;
+}
+
+/* 🎯 完美複刻：直接移植原生 .magnetic-btn-link 設計並精準靠左下對齊 */
+.stage-buy-btn {
+    position: absolute; 
+    bottom: 12%; 
+    left: 8%;   
+    display: block; 
+    width: auto;
+    min-width: 180px;
+    max-width: 240px;
+    padding: 16px 32px; 
+    border: 1px solid rgba(223,183,108,0.5); 
+    background: transparent;
+    color: #dfb76c; 
+    font-size: 11px; 
+    font-weight: bold; 
+    letter-spacing: 4px; 
+    text-indent: 4px; 
+    text-decoration: none;
+    text-align: center; 
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    transition: color 0.4s ease, border-color 0.4s ease, transform 0.4s ease; 
+    z-index: 10;
+    cursor: pointer;
+}
+.stage-buy-btn::after {
+    content: ''; position: absolute; inset: 0; background: #dfb76c; transform: translateY(100%);
+    z-index: -1; transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.stage-buy-btn:hover { 
+    color: #ffffff; 
+    border-color: #dfb76c; 
+    transform: translateY(-2px); /* 呼應原生高級動效 */
+}
+.stage-buy-btn:hover::after { transform: translateY(0); }
+
+/* =======================================================
+   🔥 MYSTERIOUS TEXT MARQUEE (神秘窄版跑馬燈)
+   ======================================================= */
+.liquid-death-marquee {
+    width: 100vw; background: #000000; overflow: hidden;
+    padding: 12px 0; display: flex; align-items: center; 
+    border-top: 2px solid #dfb76c; border-bottom: 2px solid #dfb76c;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.5);
+}
+.death-track {
+    display: flex; width: max-content;
+    animation: deathMarqueeLoop 26s linear infinite;
+}
+.death-track:hover {
+    animation-play-state: paused;
+}
+.death-block {
+    display: flex; align-items: center; gap: 45px; padding: 0 22px;
+    color: rgba(255, 255, 255, 0.4); 
+    font-size: 11px; 
+    font-weight: 700; letter-spacing: 6px; text-indent: 6px; 
+    white-space: nowrap;
+    text-transform: uppercase;
+}
+.death-block span.highlight { 
+    color: #dfb76c; 
+    font-weight: 800;
+    text-shadow: 0 0 10px rgba(223, 183, 108, 0.3); 
+}
+.death-block span.outline { 
+    color: transparent; 
+    -webkit-text-stroke: 1px rgba(255, 255, 255, 0.5); 
+}
+.death-separator { 
+    font-size: 10px; color: rgba(223, 183, 108, 0.5); 
+}
+
+@keyframes deathMarqueeLoop {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
 }
 
 /* ===== SECTION BASE ===== */
@@ -359,7 +453,7 @@ body:not(.loading) .hero h1 {
 .input-group input:not(:placeholder-shown) ~ label {
     top: -12px; font-size: 9px; color: #dfb76c; letter-spacing: 2px;
 }
-.member-action { margin-top: 40px; }
+.member-card-box { margin-top: 40px; }
 
 /* ===== PRODUCTS ===== */
 #products { background: linear-gradient(180deg, #ffffff 0%, #fafafa 50%, #ffffff 100%); }
@@ -471,7 +565,7 @@ footer p{ margin-top: 60px; font-size: 11px; letter-spacing: 2px; color: rgba(26
 @keyframes orbFloat2{ 0%, 100%{ transform: translate(0, 0) scale(1); } 50%{ transform: translate(-50px, -60px) scale(0.9); } }
 @keyframes orbFloat3{ 0%, 100%{ transform: translate(0, 0); } 50%{ transform: translate(-40px, 40px); } }
 
-/* ===== MEDIA QUERIES ===== */
+/* ===== MEDIA QUERIES (手機端響應式全面防禦) ===== */
 @media(max-width: 768px){
     html { scroll-snap-type: none !important; }
     nav { padding: 20px; }
@@ -501,6 +595,18 @@ footer p{ margin-top: 60px; font-size: 11px; letter-spacing: 2px; color: rgba(26
     .modal-close { top: 20px; right: 20px; }
     .modal-text p { font-size: 14px; }
     .member-card-box { padding: 50px 25px; }
+    
+    /* 📱 手機端大圖舞台高寬自適應防扭曲 */
+    .luxe-hero-stage { margin-top: 55px; width: 100vw; }
+    .luxe-hero-stage img.stage-full-poster { min-height: 40vh; max-height: 50vh; width: 100vw; }
+    
+    /* 📱 手機端原生 ENTER 風格按鈕定位校正 */
+    .stage-buy-btn { bottom: 8%; left: 6%; padding: 12px 24px; min-width: 140px; font-size: 10px; letter-spacing: 2px; }
+
+    /* 📱 手機端跑馬燈尺寸防爆保護 */
+    .liquid-death-marquee { padding: 10px 0; width: 100vw; }
+    .death-block { gap: 25px; padding: 0 10px; font-size: 11px; letter-spacing: 2px; }
+    .death-track { animation: deathMarqueeLoop 14s linear infinite; } 
 }
 </style>
 </head>
@@ -546,6 +652,41 @@ footer p{ margin-top: 60px; font-size: 11px; letter-spacing: 2px; color: rgba(26
     </div>
 </nav>
 
+<div class="luxe-hero-stage">
+    <a href="product.html" class="main-banner-link">
+        <img class="stage-full-poster" src="Pic1.png" alt="HELL 2 OVER 滿版形象海報">
+        <button class="stage-buy-btn">SHOP NOW</button>
+    </a>
+</div>
+
+<div class="liquid-death-marquee">
+    <div class="death-track">
+        <div class="death-block">
+            <span>MURDER YOUR THIRST</span>
+            <span class="death-separator">✦</span>
+            <span class="highlight">DEMON'S TEAR DROP</span>
+            <span class="death-separator">•</span>
+            <span class="outline">100% VOLCANIC ELIXIR</span>
+            <span class="death-separator">✦</span>
+            <span>JOIN THE HELL SEAT</span>
+            <span class="highlight">2026 EDITION</span>
+            <span class="death-separator">•</span>
+        </div>
+        <div class="death-block">
+            <span>MURDER YOUR THIRST</span>
+            <span class="death-separator">✦</span>
+            <span class="highlight">DEMON'S TEAR DROP</span>
+            <span class="death-separator">•</span>
+            <span class="outline">100% VOLCANIC ELIXIR</span>
+            <span class="death-separator">✦</span>
+            <span>JOIN THE HELL SEAT</span>
+            <span class="highlight">2026 EDITION</span>
+            <span class="death-skull"></span>
+            <span class="death-separator">•</span>
+        </div>
+    </div>
+</div>
+
 <section class="hero" id="home">
     <h1>AWAKEN</h1>
     <p class="mainSlogan">Drink the light.</p>
@@ -553,7 +694,6 @@ footer p{ margin-top: 60px; font-size: 11px; letter-spacing: 2px; color: rgba(26
         <span>The source remembers.</span>
         <span>Pure clarity begins to flow.</span>
         <span>Luxury in its purest state.</span>
-        <span>Where elegance becomes liquid.</span>
     </div>
     <a href="#story" class="scrollHint" style="text-decoration:none;">SCROLL TO ENTER</a>
 </section>
@@ -592,7 +732,7 @@ footer p{ margin-top: 60px; font-size: 11px; letter-spacing: 2px; color: rgba(26
             <div class="shard shard2"></div>
         </div>
         <h2>第三層：璀璨</h2>
-        <p>你喝下的不只是水，<br>而是尊榮與情緒。</p>
+        <p>你喝下的不時候水，<br>而是尊榮與情緒。</p>
     </div>
 </section>
 
@@ -880,7 +1020,7 @@ if (window.innerWidth > 768) {
         });
     }
     
-    applyCursorHover("button, span, a, .card-single, .ecoCard, .audio-toggle, .magnetic-btn-link, .modal-close, input, .member-subtitle strong");
+    applyCursorHover("button, span, a, .card-single, .ecoCard, .audio-toggle, .magnetic-btn-link, .modal-close, input, .member-subtitle strong, .luxe-hero-stage, .stage-buy-btn");
 
     document.querySelectorAll('.magnetic-wrap').forEach(wrap => {
         const btn = wrap.querySelector('.magnetic-btn, .magnetic-btn-link');
@@ -928,7 +1068,7 @@ const memberModal = document.getElementById('memberModal');
 
 const memberModalTitle = document.getElementById('memberModalTitle');
 const memberModalSubtitle = document.getElementById('memberModalSubtitle');
-const memberFormWrapper = document.getElementById('memberFormWrapper');
+const memberModalWrapper = document.getElementById('memberFormWrapper');
 
 const formVerify = document.getElementById('formVerify');
 const formOtp = document.getElementById('formOtp');
@@ -1022,7 +1162,7 @@ async function requestEmailOtp(email) {
             serverSecurityToken = data.token; 
             showToast('動態認證碼已發送至您的信箱，請查收。');
             
-            if(memberFormWrapper) memberFormWrapper.style.height = "160px";
+            if(memberModalWrapper) memberModalWrapper.style.height = "160px";
             formVerify.classList.remove('active');
             formRegister.classList.remove('active');
             formOtp.classList.add('active');
@@ -1048,7 +1188,7 @@ function openMemberModal(initialEmail = "", forceRegister = false) {
         memberModalSubtitle.innerHTML = "輸入獲邀信箱以驗證洗鍊資格。<br><strong>會員皆可提前獲取全球首發限定情報。</strong>";
     }
     
-    if(memberFormWrapper) memberFormWrapper.style.height = "120px";
+    if(memberModalWrapper) memberModalWrapper.style.height = "120px";
     formRegister.classList.remove('active');
     formOtp.classList.remove('active');
     formVerify.classList.add('active');
@@ -1135,7 +1275,7 @@ if (formOtp) {
                     memberModalSubtitle.innerHTML = "此信箱尚未建立席位。請留下您的尊稱與電話完成辦理。";
                     registerEmailHidden.value = emailValue;
                     
-                    if(memberFormWrapper) memberFormWrapper.style.height = "240px";
+                    if(memberModalWrapper) memberModalWrapper.style.height = "240px";
                     formOtp.classList.remove('active');
                     formRegister.classList.add('active');
                 }

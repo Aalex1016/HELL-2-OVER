@@ -4,30 +4,34 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>DEMON'S TEAR | HELL 2 OVER</title>
-<meta name="description" content="DEMON'S TEAR - 從地獄升騰而來的極致挑戰與火熱五感。純淨曜白與奢華流金交織的液體信仰。">
+<meta name="description" content="DEMON'S TEAR - 封存於白金鋁罐中的液體信仰。源自深層火山岩脈，專為拒絕平庸的洗鍊靈魂而生。">
 <meta property="og:type" content="website">
 <meta property="og:title" content="DEMON'S TEAR | HELL 2 OVER">
-<meta property="og:description" content="體驗屬於你的步調，純淨曜白與高奢流金交織。喝下的不只是水，而是情緒。">
+<meta property="og:description" content="殺死你的渴望。喝下的不只是火山湧泉，是一場重金屬靈魂革命。">
 <meta property="og:image" content="https://hell-2-over.vercel.app/H2O_FINAL.jpg">
+
+<!-- 引入高級襯線與硬派字體 -->
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Noto+Sans+TC:wght@300;500;900&display=swap" rel="stylesheet">
 
 <style>
 /* ===== 系統變數優化 (CSS Variables) ===== */
 :root {
-    --gold: #dfb76c;
-    --gold-dim: rgba(223, 183, 108, 0.4);
-    --gold-light: rgba(223, 183, 108, 0.05);
-    --dark: #1a1a1a;
-    --dark-dim: rgba(26, 26, 26, 0.7);
-    --bg-main: #ffffff;
-    --bg-panel: rgba(223, 183, 108, 0.02);
+    --gold: #cfa34c;
+    --gold-dim: rgba(207, 163, 76, 0.3);
+    --gold-light: rgba(207, 163, 76, 0.04);
+    --dark: #0d0d0d;
+    --dark-deep: #050505;
+    --gray-light: rgba(255, 255, 255, 0.65);
+    --bg-main: #0d0d0d;
+    --bg-panel: rgba(207, 163, 76, 0.01);
 }
 
 /* ===== 基礎重置與效能優化 ===== */
 *{ margin: 0; padding: 0; box-sizing: border-box; }
 body{
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-family: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, sans-serif;
     background: var(--bg-main); 
-    color: var(--dark); 
+    color: #ffffff; 
     overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
@@ -40,53 +44,95 @@ body.loading { overflow: hidden; }
 
 /* ===== 自訂義游標 ===== */
 .cursor-dot { width: 6px; height: 6px; background: var(--gold); position: fixed; pointer-events: none; z-index: 100115; border-radius: 50%; transform: translate(-50%, -50%); will-change: left, top; }
-.cursor-outline { width: 30px; height: 30px; border: 1px solid rgba(223, 183, 108, 0.6); position: fixed; pointer-events: none; z-index: 100114; border-radius: 50%; transform: translate(-50%, -50%); transition: width 0.3s, height 0.3s, background-color 0.3s, border-color 0.3s; will-change: left, top, width, height; }
-.cursor-hover .cursor-outline { width: 60px; height: 60px; background: var(--gold); border-color: transparent; opacity: 0.4; } 
+.cursor-outline { width: 32px; height: 32px; border: 1px solid rgba(207, 163, 76, 0.4); position: fixed; pointer-events: none; z-index: 100114; border-radius: 50%; transform: translate(-50%, -50%); transition: width 0.3s, height 0.3s, background-color 0.3s, border-color 0.3s; will-change: left, top, width, height; }
+.cursor-hover .cursor-outline { width: 55px; height: 55px; background: rgba(207, 163, 76, 0.1); border-color: var(--gold); opacity: 1; } 
 
 /* ===== 背景層 ===== */
-.noise{ position: fixed; inset: 0; pointer-events: none; z-index: 998; opacity: 0.06; background-image: url("https://grainy-gradients.vercel.app/noise.svg"); mix-blend-mode: multiply; }
-.bg{ position: fixed; inset: 0; z-index: -2; background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(223,183,108,0.12), transparent 40%); will-change: background; }
+.noise{ position: fixed; inset: 0; pointer-events: none; z-index: 998; opacity: 0.05; background-image: url("https://grainy-gradients.vercel.app/noise.svg"); mix-blend-mode: overlay; }
+.bg{ position: fixed; inset: 0; z-index: -2; background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(207, 163, 76, 0.08), transparent 45%), radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(255, 255, 255, 0.02), transparent 70%); will-change: background; }
+
+/* ===== ORBS ===== */
+.orb{ position: fixed; border-radius: 50%; filter: blur(140px); pointer-events: none; z-index: -1; will-change: transform; }
+.orb1{ width: 500px; height: 500px; background: #261f12; top: -15%; left: -10%; opacity: 0.4; animation: orbFloat1 20s infinite ease-in-out; }
+.orb2{ width: 550px; height: 550px; background: #141414; bottom: -10%; right: -10%; opacity: 0.5; animation: orbFloat2 25s infinite ease-in-out; }
 
 /* ===== 導航列 ===== */
 nav{ 
-    position: fixed; top: 0; left: 0; width: 100%; padding: 30px 50px; 
+    position: fixed; top: 0; left: 0; width: 100%; padding: 25px 50px; 
     display: flex; justify-content: space-between; align-items: center; 
-    background: linear-gradient(to bottom, rgba(255,255,255,0.95), rgba(255,255,255,0.7)); 
+    background: linear-gradient(to bottom, rgba(13,13,13,0.95), rgba(13,13,13,0.75)); 
     backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-    z-index: 1001; border-bottom: 1px solid rgba(223, 183, 108, 0.15); 
+    z-index: 1001; border-bottom: 1px solid rgba(207, 163, 76, 0.15); 
 }
-.logo{ letter-spacing: 6px; font-size: 11px; font-weight: 900; text-decoration: none; color: var(--gold); transition: all 0.3s ease; }
-.logo:hover { opacity: 0.7; }
+.logo{ font-family: 'Cinzel', serif; letter-spacing: 6px; font-size: 20px; font-weight: 700; text-decoration: none; color: var(--gold); transition: opacity 0.3s; }
+.logo:hover { opacity: 0.8; }
 
-/* 修正優化：右上角專屬解耦會員標籤樣式 */
-#pageMemberStatus {
-    font-size: 10px; letter-spacing: 2px; color: var(--gold); font-weight: 600;
-    border-bottom: 1px solid var(--gold-dim); padding-bottom: 2px; transition: all 0.3s;
+/* 倒十字架棺材會員狀態標籤 */
+.coffin-status-wrap {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    gap: 0;
+    overflow: hidden;
+    cursor: pointer;
 }
-#pageMemberStatus:hover { color: #ff6b6b; border-color: rgba(255,107,107,0.4); }
-
-.audio-toggle {
-    font-family: monospace; font-size: 10px; border: 1px solid rgba(223,183,108,0.4);
-    color: #dfb76c; padding: 4px 8px; letter-spacing: 1px; cursor: pointer; transition: all 0.3s;
+.coffin-status-wrap .coffin-text {
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: var(--gold);
+    max-width: 0;
+    opacity: 0;
+    white-space: nowrap;
+    transition: max-width 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+    font-weight: 700;
 }
-.audio-toggle:hover { color: #ffffff; border-color: #dfb76c; background: #dfb76c; }
+.coffin-status-wrap svg {
+    width: 24px;
+    height: 28px;
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.coffin-status-wrap svg .coffin-stroke {
+    fill: none;
+    stroke: rgba(255, 255, 255, 0.5);
+    stroke-width: 2;
+    stroke-linejoin: round;
+    transition: stroke 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.coffin-status-wrap svg .cross-fill {
+    fill: none;
+    stroke: rgba(255, 255, 255, 0.5);
+    stroke-width: 2.2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    transition: stroke 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.coffin-status-wrap:hover { gap: 10px; }
+.coffin-status-wrap:hover .coffin-text { max-width: 100px; opacity: 1; }
+.coffin-status-wrap:hover svg { transform: scale(1.12) rotate(2deg); }
+.coffin-status-wrap:hover svg .coffin-stroke,
+.coffin-status-wrap:hover svg .cross-fill {
+    stroke: var(--gold);
+    filter: drop-shadow(0 0 5px rgba(207, 163, 76, 0.5));
+}
 
 /* ===== 佈局與商品資訊 ===== */
 .main-container { flex: 1; display: flex; align-items: center; justify-content: center; padding: 140px 40px 60px 40px; }
 .detail-container { width: 100%; max-width: 1100px; display: grid; grid-template-columns: 1.3fr 1fr; gap: 60px; text-align: left; }
-.detail-left h2 { font-size: clamp(32px, 4vw, 44px); font-weight: 300; color: var(--gold); letter-spacing: 6px; margin-bottom: 5px; }
-.detail-left .brand-sub { font-size: 12px; letter-spacing: 4px; color: var(--dark-dim); margin-bottom: 30px; text-transform: uppercase; }
-.detail-story-text { color: var(--dark-dim); font-size: 14px; line-height: 2.2; letter-spacing: 1px; margin-bottom: 40px; }
+.detail-left h2 { font-family: 'Cinzel', serif; font-size: clamp(32px, 4vw, 44px); font-weight: 400; color: var(--gold); letter-spacing: 4px; margin-bottom: 5px; }
+.detail-left .brand-sub { font-size: 12px; letter-spacing: 3px; color: var(--gray-light); margin-bottom: 30px; text-transform: uppercase; font-weight: bold; }
+.detail-story-text { color: var(--gray-light); font-size: 15px; line-height: 2.2; letter-spacing: 1px; margin-bottom: 40px; font-weight: 300; }
 
 /* 商品展示與動畫 */
 .product-image-wrapper {
-    width: 100%; background: #fafafa; border: 1px solid rgba(223, 183, 108, 0.2);
+    width: 100%; background: #050505; border: 1px solid rgba(207, 163, 76, 0.15);
     padding: 40px; display: flex; align-items: center; justify-content: center;
     position: relative; overflow: hidden; height: 500px;
 }
 .liquid-blob {
     position: absolute; width: 350px; height: 350px;
-    background: linear-gradient(135deg, rgba(223,183,108,0.25), rgba(223,183,108,0.05));
+    background: linear-gradient(135deg, rgba(207, 163, 76, 0.15), rgba(207, 163, 76, 0.03));
     animation: liquidMorph 12s ease-in-out infinite alternate;
     z-index: 0; filter: blur(25px); pointer-events: none;
 }
@@ -97,65 +143,65 @@ nav{
 
 .main-product-video {
     width: 100%; max-width: 100%; height: auto; max-height: 400px; 
-    object-fit: contain; filter: drop-shadow(0 20px 30px rgba(0,0,0,0.15)); 
+    object-fit: contain; filter: drop-shadow(0 20px 40px rgba(0,0,0,0.6)); 
     position: relative; z-index: 1; animation: buoyancy 6s ease-in-out infinite; will-change: transform;
 }
 @keyframes buoyancy { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
 
 .concept-badges { display: flex; gap: 20px; margin-top: 30px; }
 .concept-badge-item { border-left: 1px solid var(--gold-dim); padding-left: 15px; }
-.concept-badge-item h5 { font-size: 11px; color: var(--gold); letter-spacing: 2px; font-weight: 400; margin-bottom: 4px; }
-.concept-badge-item p { font-size: 11px; color: var(--dark-dim); }
+.concept-badge-item h5 { font-size: 11px; color: var(--gold); letter-spacing: 2px; font-weight: bold; margin-bottom: 4px; }
+.concept-badge-item p { font-size: 11px; color: var(--gray-light); font-weight: 300; }
 
 /* 右側購買卡片 */
-.detail-right { background: var(--bg-panel); border: 1px solid rgba(223, 183, 108, 0.2); padding: 50px 40px; display: flex; flex-direction: column; justify-content: space-between; position: relative; box-shadow: 0 30px 100px rgba(0,0,0,0.04); } 
-.purchase-header h4 { font-size: 22px; color: var(--dark); letter-spacing: 2px; margin-bottom: 8px; font-weight: 400; }
-.purchase-header .price { font-size: 22px; color: var(--gold); font-family: monospace; margin-bottom: 30px; }
+.detail-right { background: rgba(207, 163, 76, 0.01); border: 1px solid rgba(207, 163, 76, 0.15); padding: 50px 40px; display: flex; flex-direction: column; justify-content: space-between; position: relative; box-shadow: 0 40px 90px rgba(0,0,0,0.5); } 
+.purchase-header h4 { font-family: 'Cinzel', serif; font-size: 22px; color: #ffffff; letter-spacing: 2px; margin-bottom: 8px; font-weight: 400; }
+.purchase-header .price { font-size: 22px; color: var(--gold); font-family: 'Cinzel', monospace; margin-bottom: 30px; }
 
 .option-group { margin-bottom: 35px; }
-.option-label { font-size: 10px; color: rgba(223, 183, 108, 0.8); letter-spacing: 2px; margin-bottom: 12px; }
+.option-label { font-size: 10px; color: var(--gold); letter-spacing: 2px; margin-bottom: 12px; font-weight: bold; }
 .spec-selector { display: flex; gap: 15px; flex-wrap: wrap; }
-.spec-chip { border: 1px solid var(--gold-dim); padding: 10px 20px; font-size: 11px; color: var(--dark-dim); letter-spacing: 1px; cursor: pointer; transition: all 0.3s ease; }
-.spec-chip.active, .spec-chip:hover { border-color: var(--gold); color: var(--gold); background: var(--gold-light); }
+.spec-chip { border: 1px solid var(--gold-dim); padding: 10px 20px; font-size: 11px; color: var(--gray-light); letter-spacing: 1px; cursor: pointer; transition: all 0.3s ease; font-weight: bold; }
+.spec-chip.active, .spec-chip:hover { border-color: var(--gold); color: #0d0d0d; background: var(--gold); }
 
-.specs-list { margin-top: 10px; padding-top: 25px; border-top: 1px solid rgba(223, 183, 108, 0.2); }
+.specs-list { margin-top: 10px; padding-top: 25px; border-top: 1px solid rgba(207, 163, 76, 0.15); }
 .spec-row { display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 12px; letter-spacing: 1px; }
-.spec-row .s-label { color: rgba(223, 183, 108, 0.8); }
-.spec-row .s-value { color: rgba(26, 26, 26, 0.9); }
+.spec-row .s-label { color: var(--gold); font-weight: bold; font-size: 10px; }
+.spec-row .s-value { color: var(--gray-light); font-weight: 300; }
 
-.total-summary { border-top: 1px solid rgba(223, 183, 108, 0.2); padding-top: 25px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
-.total-summary span { font-size: 12px; color: var(--dark-dim); letter-spacing: 1px; }
-.total-summary .total-price { font-size: 24px; color: var(--gold); font-family: monospace; }
+.total-summary { border-top: 1px solid rgba(207, 163, 76, 0.15); padding-top: 25px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+.total-summary span { font-size: 12px; color: var(--gray-light); letter-spacing: 1px; }
+.total-summary .total-price { font-size: 24px; color: var(--gold); font-family: 'Cinzel', monospace; }
 
-.magnetic-wrap { display: inline-block; position: relative; width: 100%; }
+.magnetic-wrap { display: inline-block; position: relative; width: 100%; z-index: 12; }
 button{
-    width: 100%; padding: 16px; border: 1px solid rgba(223,183,108,0.5); background: transparent;
-    color: var(--gold); font-size: 11px; font-weight: bold; letter-spacing: 4px; text-indent: 4px;
-    cursor: pointer; position: relative; z-index: 1; overflow: hidden; transition: color 0.5s ease;
+    display: block; width: 100%; padding: 16px; border: 1px solid var(--gold); background: transparent;
+    color: var(--gold); font-size: 11px; font-weight: bold; letter-spacing: 4px; text-indent: 4px; text-transform: uppercase;
+    cursor: pointer; position: relative; overflow: hidden; transition: all 0.4s ease;
 }
 button::after {
-    content: ''; position: absolute; left: 50%; top: 100%; width: 300%; height: 300%; background: var(--gold);
-    border-radius: 40%; transform: translate(-50%, 10%) rotate(0deg); z-index: -1; transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    content: ''; position: absolute; inset: 0; background: var(--gold); transform: translateY(100%);
+    z-index: -1; transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
-button:hover { color: #ffffff; } 
-button:hover::after { transform: translate(-50%, -80%) rotate(180deg); }
+button:hover { color: #0d0d0d; } 
+button:hover::after { transform: translateY(0); }
 
 /* Accordion 手風琴 */
 .extended-info-section { width: 100%; max-width: 1100px; margin: 0 auto 40px auto; padding: 20px 40px 60px 40px; }
-.section-title { text-align: center; font-size: 20px; color: var(--gold); letter-spacing: 6px; font-weight: 300; margin-bottom: 40px; }
+.section-title { font-family: 'Cinzel', serif; text-align: center; font-size: 20px; color: var(--gold); letter-spacing: 6px; font-weight: 400; margin-bottom: 40px; }
 .info-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; align-items: flex-start; }
 
-.info-card { background: var(--bg-panel); border: 1px solid rgba(223, 183, 108, 0.15); padding: 40px 30px; transition: transform 0.4s ease, background 0.4s ease, border-color 0.4s ease; will-change: transform; cursor: pointer; position: relative; overflow: hidden;}
-.info-card:hover { transform: translateY(-8px); background: rgba(223, 183, 108, 0.05); border-color: rgba(223, 183, 108, 0.4); }
+.info-card { background: rgba(207, 163, 76, 0.01); border: 1px solid rgba(207, 163, 76, 0.15); padding: 40px 30px; transition: transform 0.4s ease, background 0.4s ease, border-color 0.4s ease; will-change: transform; cursor: pointer; position: relative; overflow: hidden;}
+.info-card:hover { transform: translateY(-4px); background: rgba(207, 163, 76, 0.02); border-color: var(--gold); }
 .card-header-flex { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
-.card-header-flex h4 { font-size: 13px; color: var(--dark); letter-spacing: 2px; font-weight: 600; margin: 0;}
+.card-header-flex h4 { font-family: 'Cinzel', serif; font-size: 13px; color: #ffffff; letter-spacing: 2px; font-weight: 400; margin: 0;}
 .toggle-icon { font-size: 18px; color: var(--gold); font-weight: 300; transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
-.info-card p.short-desc { font-size: 12px; color: var(--dark-dim); line-height: 2.2; letter-spacing: 1px; transition: opacity 0.3s; margin-bottom: 0;}
+.info-card p.short-desc { font-size: 12px; color: var(--gray-light); line-height: 2.2; letter-spacing: 1px; transition: opacity 0.3s; margin-bottom: 0; font-weight: 300;}
 
 .detail-content { max-height: 0; opacity: 0; overflow: hidden; transition: max-height 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.6s ease, margin-top 0.4s ease, padding-top 0.4s ease; }
-.detail-content p { font-size: 12px; color: var(--dark); line-height: 2.2; letter-spacing: 1px; }
+.detail-content p { font-size: 12px; color: #ffffff; line-height: 2.2; letter-spacing: 1px; font-weight: 300; }
 
-.info-card.expanded { background: rgba(223, 183, 108, 0.05); border-color: rgba(223, 183, 108, 0.5); }
+| info-card.expanded { background: rgba(207, 163, 76, 0.02); border-color: var(--gold); }
 .info-card.expanded .toggle-icon { transform: rotate(135deg); }
 .info-card.expanded .short-desc { opacity: 0.5; }
 .info-card.expanded .detail-content { max-height: 400px; opacity: 1; margin-top: 20px; padding-top: 20px; border-top: 1px dashed var(--gold-dim); }
@@ -163,25 +209,25 @@ button:hover::after { transform: translate(-50%, -80%) rotate(180deg); }
 /* Email 訂閱 */
 .subscribe-box { display: flex; width: 100%; max-width: 320px; margin: 0 auto; border-bottom: 1px solid var(--gold-dim); padding-bottom: 10px; transition: border-color 0.3s; }
 .subscribe-box:focus-within { border-color: var(--gold); }
-.subscribe-box input { flex: 1; background: transparent; border: none; outline: none; color: var(--dark); font-size: 11px; letter-spacing: 3px; }
-.subscribe-box input::placeholder { color: rgba(26,26,26,0.3); }
+.subscribe-box input { flex: 1; background: transparent; border: none; outline: none; color: #ffffff; font-size: 11px; letter-spacing: 3px; font-weight: bold; }
+.subscribe-box input::placeholder { color: rgba(255,255,255,0.25); }
 .subscribe-box button { width: auto; padding: 0 10px; border: none; color: var(--gold); background: transparent; font-size: 16px; cursor: pointer; transition: transform 0.3s; }
 .subscribe-box button::after { display: none; }
-.subscribe-box button:hover { transform: translateX(5px); color: var(--gold); background: transparent; }
+.subscribe-box button:hover { transform: translateX(5px); background: transparent; }
 
 /* Spinner */
-.spinner { display: inline-block; width: 12px; height: 12px; margin-right: 8px; border: 2px solid rgba(255,255,255,0.3); border-radius: 50%; border-top-color: #fff; animation: spin 1s ease-in-out infinite; vertical-align: middle; }
+.spinner { display: inline-block; width: 12px; height: 12px; margin-right: 8px; border: 2px solid rgba(255,255,255,0.3); border-radius: 50%; border-top-color: var(--gold); animation: spin 1s ease-in-out infinite; vertical-align: middle; }
 @keyframes spin { to { transform: rotate(360deg); } }
 
 /* Toast */
-.custom-toast { position: fixed; bottom: -100px; left: 50%; transform: translateX(-50%); background: var(--dark); color: var(--gold); padding: 12px 24px; font-size: 11px; letter-spacing: 2px; border: 1px solid var(--gold-dim); box-shadow: 0 10px 30px rgba(0,0,0,0.2); z-index: 100015; transition: bottom 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s; opacity: 0; pointer-events: none; }
+.custom-toast { position: fixed; bottom: -100px; left: 50%; transform: translateX(-50%); background: #111111; color: var(--gold); padding: 12px 24px; font-size: 11px; letter-spacing: 2px; border: 1px solid var(--gold); box-shadow: 0 15px 40px rgba(0,0,0,0.5); z-index: 100015; transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1); opacity: 0; pointer-events: none; }
 .custom-toast.show { bottom: 40px; opacity: 1; }
 
 .reveal-up { opacity: 0; transform: translateY(40px); transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1); will-change: transform, opacity; }
 .reveal-up.active { opacity: 1; transform: translateY(0); }
 .delay-1 { transition-delay: 0.1s; } .delay-2 { transition-delay: 0.2s; } .delay-3 { transition-delay: 0.3s; }
 
-footer { padding: 40px; text-align: center; font-size: 11px; color: rgba(26, 26, 26, 0.5); border-top: 1px solid rgba(223, 183, 108, 0.15); letter-spacing: 2px;}
+footer { padding: 100px 40px; text-align: center; font-size: 11px; color: rgba(255, 255, 255, 0.25); border-top: 1px solid rgba(207, 163, 76, 0.15); letter-spacing: 2px; background: var(--dark-deep); }
 
 @media(max-width: 900px){
     .detail-container { grid-template-columns: 1fr; gap: 40px; }
@@ -194,11 +240,14 @@ footer { padding: 40px; text-align: center; font-size: 11px; color: rgba(26, 26,
     .mobile-sticky-buy {
         display: flex; justify-content: space-between; align-items: center;
         position: fixed; bottom: 0; left: 0; width: 100%;
-        background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px);
-        border-top: 1px solid rgba(223, 183, 108, 0.2); padding: 15px 20px; z-index: 9995;
+        background: rgba(13, 13, 13, 0.95); backdrop-filter: blur(10px);
+        border-top: 1px solid rgba(207, 163, 76, 0.2); padding: 15px 20px; z-index: 9995;
     }
-    .mobile-sticky-buy .price { font-size: 16px; color: var(--gold); font-family: monospace; }
-    .mobile-sticky-buy a { background: var(--gold); color: #fff; text-decoration: none; padding: 10px 24px; font-size: 11px; font-weight: bold; letter-spacing: 2px; }
+    .mobile-sticky-buy .price { font-size: 16px; color: var(--gold); font-family: 'Cinzel', monospace; }
+    .mobile-sticky-buy a { background: var(--gold); color: #0d0d0d; text-decoration: none; padding: 10px 24px; font-size: 11px; font-weight: bold; letter-spacing: 2px; }
+    
+    .coffin-status-wrap { gap: 8px; }
+    .coffin-status-wrap .coffin-text { max-width: 100px; opacity: 0.7; }
 }
 </style>
 </head>
@@ -212,8 +261,14 @@ footer { padding: 40px; text-align: center; font-size: 11px; color: rgba(26, 26,
 <nav>
     <a href="index.html" class="logo">← HELL 2 OVER</a>
     <div style="display: flex; gap: 25px; align-items: center;">
-        <span id="pageMemberStatus" style="display: none; cursor: pointer;">STATUS: ACTIVE</span>
-        <div class="audio-toggle" id="audioToggle">AUDIO OFF</div>
+        <a href="javascript:void(0);" id="pageMemberStatus" class="coffin-status-wrap" style="display: none;">
+            <span class="coffin-text">ACTIVE</span>
+            <svg viewBox="0 0 24 28">
+                <polygon class="coffin-stroke" points="12,2 19,5 22,12 18,26 6,26 2,12 5,5" />
+                <polygon class="coffin-stroke" points="12,4.5 17.5,7 20,12.5 16.5,24.5 7.5,24.5 4,12.5 6.5,7" style="opacity: 0.75;" />
+                <path class="cross-fill" d="M12,7 v11 M9,14.5 h6" />
+            </svg>
+        </a>
     </div>
 </nav>
 
@@ -294,7 +349,8 @@ footer { padding: 40px; text-align: center; font-size: 11px; color: rgba(26, 26,
                     <div class="total-price" id="totalPrice">$45 TWD</div>
                 </div>
                 <div class="magnetic-wrap">
-                    <button id="buyBtn">BUY NOW</button>
+                    <!-- 🎯 桌面端按鈕字樣已修正為 COMING SOON -->
+                    <button id="buyBtn">COMING SOON</button>
                 </div>
             </div>
         </div>
@@ -335,7 +391,7 @@ footer { padding: 40px; text-align: center; font-size: 11px; color: rgba(26, 26,
             </div>
             <p class="short-desc">採用高阻隔消光白金鋁罐，完美阻絕光線以維持水質的絕對新鮮。洗鍊的奢華白金視覺，詮釋出現代極簡的高奢質感與永續精神。</p>
             <div class="detail-content">
-                <p>我們捨棄了傳統的透明寶特瓶，大膽選用高成本的阻光消光鋁罐。這不僅是為了徹底阻絕紫外線照射，確保水質在存放期間完全不變質、不生菌，更是出於對地球環境的承諾。全罐體以純淨曜白做大面積襯底，邊緣注入尊榮流金絲線，我們將極致美學與地球永續完美結合，真正做到高奢而不浪費。</p>
+                <p>我們捨棄了傳統的透明寶特瓶，大膽選用高成本的阻光消光鋁罐。這 nesting 不僅是為了徹底阻絕紫外線照射，確保水質在存放期間完全不變質、不生菌，更是出於對地球環境的承諾。全罐體以純淨曜白做大面積襯底，邊緣注入尊榮流金絲線，我們將極致美學與地球永續完美結合，真正做到高奢而不浪費。</p>
             </div>
         </div>
 
@@ -373,7 +429,7 @@ footer { padding: 40px; text-align: center; font-size: 11px; color: rgba(26, 26,
 
 <section class="extended-info-section" style="text-align: center; margin-top: 20px;">
     <h3 class="section-title reveal-up" style="margin-bottom: 20px; font-size: 16px;">STAY IN THE LOOP</h3>
-    <p style="font-size: 11px; color: var(--dark-dim); letter-spacing: 2px; margin-bottom: 30px;" id="footerSubText">輸入 Email，優先獲取未來限量組合發售情報。</p>
+    <p style="font-size: 11px; color: var(--gray-light); letter-spacing: 2px; margin-bottom: 30px;" id="footerSubText">輸入 Email，優先獲取未來限量組合發售情報。</p>
     
     <form class="subscribe-box reveal-up delay-1" id="notifyForm" action="https://formspree.io/f/mnjyyqlk" method="POST">
         <input type="email" id="footerSubInput" name="email" placeholder="YOUR EMAIL" required>
@@ -382,57 +438,18 @@ footer { padding: 40px; text-align: center; font-size: 11px; color: rgba(26, 26,
 </section>
 
 <footer>
-    <p>© 2026 HELL 2 OVER. Beyond hydration.</p>
+    <p>© 2026 HELL 2 OVER. Murder your thirst. Beyond hydration.</p>
 </footer>
 
 <div class="custom-toast" id="toastMsg">系統訊息</div>
 
+<!-- 🎯 手機端底部置底按鈕字樣同步修正為 COMING SOON -->
 <div class="mobile-sticky-buy" style="display: none;">
     <span class="price" id="mobilePrice">$45 TWD</span>
-    <a href="#products">BUY NOW</a>
+    <a href="#products">COMING SOON</a>
 </div>
 
 <script>
-const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-let bgNoiseNode = null;
-let isAudioOn = false;
-
-function createBackgroundNoise() {
-    const bufferSize = 2 * audioCtx.sampleRate;
-    const noiseBuffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
-    const output = noiseBuffer.getChannelData(0);
-    for (let i = 0; i < bufferSize; i++) { output[i] = Math.random() * 2 - 1; }
-    const whiteNoise = audioCtx.createBufferSource(); whiteNoise.buffer = noiseBuffer; whiteNoise.loop = true;
-    const filter = audioCtx.createBiquadFilter(); filter.type = 'lowpass'; filter.frequency.value = 400; 
-    const gainNode = audioCtx.createGain(); gainNode.gain.value = 0.015;
-    whiteNoise.connect(filter); filter.connect(gainNode); gainNode.connect(audioCtx.destination);
-    return whiteNoise;
-}
-
-function playClickSound() {
-    if (!isAudioOn) return;
-    if (audioCtx.state === 'suspended') audioCtx.resume();
-    const osc = audioCtx.createOscillator(); const gainNode = audioCtx.createGain();
-    osc.type = 'sine'; osc.frequency.setValueAtTime(1200, audioCtx.currentTime);
-    osc.frequency.exponentialRampToValueAtTime(300, audioCtx.currentTime + 0.08);
-    gainNode.gain.setValueAtTime(0.04, audioCtx.currentTime);
-    gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.08);
-    osc.connect(gainNode); gainNode.connect(audioCtx.destination);
-    osc.start(); osc.stop(audioCtx.currentTime + 0.08);
-}
-
-document.getElementById('audioToggle').addEventListener('click', function(e) {
-    e.stopPropagation();
-    if (audioCtx.state === 'suspended') audioCtx.resume();
-    if (!isAudioOn) {
-        bgNoiseNode = createBackgroundNoise(); bgNoiseNode.start();
-        this.innerText = "AUDIO ON"; isAudioOn = true;
-    } else {
-        if (bgNoiseNode) bgNoiseNode.stop();
-        this.innerText = "AUDIO OFF"; isAudioOn = false;
-    }
-});
-
 /* 游標跟隨 */
 let mouseX = 0, mouseY = 0, dotX = 0, dotY = 0, outlineX = 0, outlineY = 0;
 const cursorDot = document.getElementById("cursorDot");
@@ -454,11 +471,11 @@ requestAnimationFrame(animateCursor);
 const body = document.body;
 function applyCursorHover(selector) {
     document.querySelectorAll(selector).forEach(elem => {
-        elem.addEventListener("mouseenter", () => { body.classList.add("cursor-hover"); playClickSound(); });
+        elem.addEventListener("mouseenter", () => { body.classList.add("cursor-hover"); });
         elem.addEventListener("mouseleave", () => body.classList.remove("cursor-hover"));
     });
 }
-applyCursorHover("button, span, a, .spec-chip, .logo, .info-card, input, .audio-toggle, #pageMemberStatus");
+applyCursorHover("button, span, a, .spec-chip, .logo, .info-card, input, #pageMemberStatus");
 
 /* ===== 全局狀態同步控制中心 ===== */
 const pageMemberStatus = document.getElementById('pageMemberStatus');
@@ -472,19 +489,20 @@ function updateLoginVisualState() {
     
     if (isLoggedValue) {
         if (pageMemberStatus) {
-            pageMemberStatus.innerText = "STATUS: ACTIVE";
-            pageMemberStatus.style.display = "inline-block"; // 只有在登錄時顯示此解耦控制元件
+            const textEl = pageMemberStatus.querySelector('.coffin-text');
+            if (textEl) textEl.innerText = "ACTIVE";
+            pageMemberStatus.style.display = "inline-flex"; 
         }
         if (footerSubText) footerSubText.innerHTML = "洗鍊席位已開通，<strong>情報發送中</strong>";
         if (footerSubInput) {
             footerSubInput.placeholder = isLoggedValue.toUpperCase();
-            footerSubInput.style.color = "#dfb76c";
+            footerSubInput.style.color = "var(--gold)";
             footerSubInput.disabled = true;
             footerSubInput.required = false;
         }
         if (footerSubBtn) {
             footerSubBtn.innerText = "✓";
-            footerSubBtn.style.color = "#dfb76c";
+            footerSubBtn.style.color = "var(--gold)";
             footerSubBtn.disabled = true;
         }
     } else {
@@ -513,9 +531,9 @@ function handleLogout() {
     updateLoginVisualState();
 }
 
-// 修正：將登出綁定在解耦按鈕上，Logo 保持純回首頁功能
 if (pageMemberStatus) {
     pageMemberStatus.addEventListener('click', (e) => {
+        e.preventDefault();
         handleLogout();
     });
 }
@@ -567,7 +585,6 @@ function showToast(message) {
     setTimeout(() => { toast.classList.remove('show'); }, 3500);
 }
 
-/* 修正優化：已登錄狀態下給予明確的重複訂閱回饋提示，而不只是靜默 return */
 if (notifyForm) {
     notifyForm.addEventListener('submit', async function(e) {
         e.preventDefault(); 
@@ -599,52 +616,13 @@ if (notifyForm) {
     });
 }
 
-/* 結帳 */
-document.getElementById('buyBtn').addEventListener('click', async () => {
-    const btn = document.getElementById('buyBtn');
-    const originalText = 'BUY NOW';
-    const optionGroups = document.querySelectorAll('.option-group');
-    if (optionGroups.length < 2) { showToast('網頁元件載入不完全，請重新整理頁面。'); return; }
-    
-    const activeBundle = optionGroups[0].querySelector('.spec-chip.active');
-    const activeShipping = optionGroups[1].querySelector('.spec-chip.active');
-    
-    if (!activeBundle || !activeShipping) { showToast('請先選擇商品組合與配送方式。'); return; }
+/* 🎯 結帳防禦機制：未正式開售前阻止金流請求並提示 Coming Soon */
+const handleComingSoonNotice = (e) => {
+    if (e) e.preventDefault();
+    showToast('DEMON\'S TEAR 目前為預熱階段，尚未正式開售。敬請期待！');
+};
 
-    const selectedBundleText = activeBundle.innerText;
-    const selectedShipping = activeShipping.innerText;
-
-    let bundleKey = '1_CAN';
-    if (selectedBundleText.includes('6 CANS')) bundleKey = '6_CANS';
-    if (selectedBundleText.includes('24 CANS')) bundleKey = '24_CANS';
-
-    btn.innerHTML = '<span class="spinner"></span>PROCESSING...';
-    btn.style.pointerEvents = 'none'; btn.style.color = '#fff';
-    
-    try {
-        const response = await fetch('/api/checkout', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ bundle: bundleKey, shippingMethod: selectedShipping })
-        });
-        const responseText = await response.text();
-        let data;
-        try { data = JSON.parse(responseText); } catch (e) {
-            showToast('金流伺服器回傳格式錯誤 (500 Error)，請檢查 Vercel Dashboard 的環境變數設定。');
-            btn.innerHTML = originalText; btn.style.pointerEvents = 'auto'; btn.style.color = '';
-            return;
-        }
-
-        if (response.ok && data.url) { window.location.href = data.url; } 
-        else {
-            showToast('系統提示：' + (data.error || '無法建立結帳連結，請稍後再試。'));
-            btn.innerHTML = originalText; btn.style.pointerEvents = 'auto'; btn.style.color = '';
-        }
-    } catch (error) {
-        showToast('本機連線限制或網路中斷，請確認環境後再試。');
-        btn.innerHTML = originalText; btn.style.pointerEvents = 'auto'; btn.style.color = '';
-    }
-});
+document.getElementById('buyBtn').addEventListener('click', handleComingSoonNotice);
 
 const observerOptions = { root: null, threshold: 0.02, rootMargin: "0px" };
 const observer = new IntersectionObserver((entries) => {
@@ -657,7 +635,12 @@ updateLoginVisualState();
 
 if(window.innerWidth <= 900) {
     const stickyBuy = document.querySelector('.mobile-sticky-buy');
-    if(stickyBuy) stickyBuy.style.display = 'flex';
+    if(stickyBuy) {
+        stickyBuy.style.display = 'flex';
+        // 🎯 手機端置底按鈕點擊也套用相同的 Coming Soon 提示防禦
+        const mobileAnchor = stickyBuy.querySelector('a');
+        if(mobileAnchor) mobileAnchor.addEventListener('click', handleComingSoonNotice);
+    }
 }
 </script>
 </body>

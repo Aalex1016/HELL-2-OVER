@@ -10,7 +10,6 @@
 <meta property="og:description" content="殺死你的渴望。喝下的不只是火山湧泉，是一場重金屬靈魂革命。">
 <meta property="og:image" content="https://hell-2-over.vercel.app/H2O_FINAL.jpg">
 
-<!-- 引入高級襯線與硬派字體 -->
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Noto+Sans+TC:wght@300;500;900&display=swap" rel="stylesheet">
 
 <style>
@@ -21,13 +20,13 @@ html{
     scroll-behavior: smooth;
     scroll-snap-type: y proximity; 
     scroll-padding-top: 80px; 
-    background: #0d0d0d; 
+    background: #ffffff; 
 }
 
 body{
     font-family: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, sans-serif;
-    background: #0d0d0d; 
-    color: #ffffff; 
+    background: #ffffff; 
+    color: #111111; 
     overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
@@ -38,16 +37,16 @@ body.loading { overflow: hidden; }
 /* ===== 高級系統變數 ===== */
 :root {
     --gold: #cfa34c;
-    --gold-dim: rgba(207, 163, 76, 0.3);
+    --gold-dim: rgba(207, 163, 76, 0.4);
     --gold-light: rgba(207, 163, 76, 0.04);
-    --dark: #0d0d0d;
-    --dark-deep: #050505;
-    --gray-light: rgba(255, 255, 255, 0.65);
+    --dark: #ffffff;
+    --dark-deep: #f9f9f9;
+    --gray-light: rgba(0, 0, 0, 0.7);
 }
 
 /* ===== LOADER ===== */
 .loader{
-    position: fixed; inset: 0; background: var(--dark-deep); z-index: 99999;
+    position: fixed; inset: 0; background: #ffffff; z-index: 99999;
     display: flex; justify-content: center; align-items: center; flex-direction: column;
     animation: loaderFade 0.8s 3.2s cubic-bezier(0.85, 0, 0.15, 1) forwards;
 }
@@ -66,15 +65,15 @@ body.loading { overflow: hidden; }
 
 /* ===== FILM NOISE & BG ===== */
 .noise{
-    position: fixed; inset: 0; pointer-events: none; z-index: 998; opacity: 0.05; 
+    position: fixed; inset: 0; pointer-events: none; z-index: 998; opacity: 0.03; 
     background-image: url("https://grainy-gradients.vercel.app/noise.svg");
-    mix-blend-mode: overlay; 
+    mix-blend-mode: multiply; 
 }
 .bg{
     position: fixed; inset: 0; z-index: -2; pointer-events: none;
     background: 
-    radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(207, 163, 76, 0.08), transparent 45%),
-    radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(255, 255, 255, 0.02), transparent 70%);
+    radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(207, 163, 76, 0.12), transparent 45%),
+    radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(0, 0, 0, 0.02), transparent 70+%);
     will-change: background;
 }
 
@@ -85,14 +84,14 @@ body.loading { overflow: hidden; }
     transform: translate(-50%, -50%); will-change: left, top;
 }
 .cursor-outline {
-    width: 32px; height: 32px; border: 1px solid rgba(207, 163, 76, 0.4); 
+    width: 32px; height: 32px; border: 1px solid rgba(207, 163, 76, 0.6); 
     position: fixed; pointer-events: none; z-index: 100114; border-radius: 50%;
     transform: translate(-50%, -50%);
     transition: width 0.3s, height 0.3s, background-color 0.3s, border-color 0.3s;
     will-change: left, top, width, height;
 }
 .cursor-hover .cursor-outline {
-    width: 55px; height: 55px; background: rgba(207, 163, 76, 0.1); border-color: var(--gold); opacity: 1; 
+    width: 55px; height: 55px; background: rgba(207, 163, 76, 0.08); border-color: var(--gold); opacity: 1; 
 }
 
 /* ===== ORBS ===== */
@@ -100,17 +99,17 @@ body.loading { overflow: hidden; }
     position: fixed; border-radius: 50%; filter: blur(140px); pointer-events: none; z-index: -1;
     will-change: transform;
 }
-.orb1{ width: 500px; height: 500px; background: #261f12; top: -15%; left: -10%; opacity: 0.4; animation: orbFloat1 20s infinite ease-in-out; }
-.orb2{ width: 550px; height: 550px; background: #141414; bottom: -10%; right: -10%; opacity: 0.5; animation: orbFloat2 25s infinite ease-in-out; }
-.orb3{ width: 400px; height: 400px; background: #1f1c16; top: 35%; left: 45%; opacity: 0.3; animation: orbFloat3 22s infinite ease-in-out; }
+.orb1{ width: 500px; height: 500px; background: #f5eedf; top: -15%; left: -10%; opacity: 0.6; animation: orbFloat1 20s infinite ease-in-out; }
+.orb2{ width: 550px; height: 550px; background: #eadecc; bottom: -10%; right: -10%; opacity: 0.5; animation: orbFloat2 25s infinite ease-in-out; }
+.orb3{ width: 400px; height: 400px; background: #f0e6d2; top: 35%; left: 45%; opacity: 0.4; animation: orbFloat3 22s infinite ease-in-out; }
 
 /* ===== NAV ===== */
 nav{
     position: fixed; top: 0; left: 0; width: 100%; padding: 25px 50px;
     display: flex; justify-content: space-between; align-items: center;
-    background: linear-gradient(to bottom, rgba(13,13,13,0.95), rgba(13,13,13,0.75)); 
+    background: linear-gradient(to bottom, rgba(255,255,255,0.95), rgba(255,255,255,0.75)); 
     backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-    z-index: 1001; border-bottom: 1px solid rgba(207, 163, 76, 0.15);
+    z-index: 1001; border-bottom: 1px solid rgba(207, 163, 76, 0.2);
 }
 .logo{
     font-family: 'Cinzel', serif; letter-spacing: 6px; font-size: 20px; font-weight: 700; text-decoration: none;
@@ -120,7 +119,7 @@ nav{
 .navRight{ display: flex; gap: 30px; font-size: 11px; letter-spacing: 3px; align-items: center; }
 .navLinks { display: flex; gap: 25px; align-items: center; font-weight: bold; }
 .navLinks a {
-    color: rgba(255, 255, 255, 0.5); text-decoration: none; transition: all 0.3s ease; position: relative; padding-bottom: 4px;
+    color: rgba(0, 0, 0, 0.5); text-decoration: none; transition: all 0.3s ease; position: relative; padding-bottom: 4px;
 }
 .navLinks a:hover, .navLinks a.active { color: var(--gold); }
 .navLinks a::after {
@@ -134,12 +133,12 @@ nav{
 }
 .navLinks a#navSignInBtn::after { display: none; }
 .navLinks a#navSignInBtn .coffin-text {
-    font-family: 'Cinzel', serif; font-size: 11px; letter-spacing: 2px; color: rgba(255, 255, 255, 0.5);
+    font-family: 'Cinzel', serif; font-size: 11px; letter-spacing: 2px; color: rgba(0, 0, 0, 0.5);
     max-width: 0; opacity: 0; white-space: nowrap; transition: max-width 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease, color 0.3s;
 }
 .navLinks a#navSignInBtn svg { width: 24px; height: 28px; transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
-.navLinks a#navSignInBtn svg .coffin-stroke { fill: none; stroke: rgba(255, 255, 255, 0.5); stroke-width: 2; stroke-linejoin: round; transition: stroke 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
-.navLinks a#navSignInBtn svg .cross-fill { fill: none; stroke: rgba(255, 255, 255, 0.5); stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; transition: stroke 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
+.navLinks a#navSignInBtn svg .coffin-stroke { fill: none; stroke: rgba(0, 0, 0, 0.6); stroke-width: 2; stroke-linejoin: round; transition: stroke 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
+.navLinks a#navSignInBtn svg .cross-fill { fill: none; stroke: rgba(0, 0, 0, 0.6); stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; transition: stroke 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
 
 .navLinks a#navSignInBtn:hover { gap: 10px; }
 .navLinks a#navSignInBtn:hover .coffin-text { max-width: 80px; opacity: 1; color: var(--gold); }
@@ -149,7 +148,7 @@ nav{
 
 .navLinks a.loggedin-status { color: var(--gold); font-weight: 600; text-shadow: 0 0 10px rgba(207, 163, 76, 0.3); pointer-events: none; }
 .navLinks a.loggedin-status::after { width: 100%; background: var(--gold); }
-.navLinks a#navLogoutBtn { color: rgba(255, 255, 255, 0.3); }
+.navLinks a#navLogoutBtn { color: rgba(0, 0, 0, 0.4); }
 .navLinks a#navLogoutBtn:hover { color: #ff6b6b; }
 
 .menu-toggle {
@@ -161,47 +160,47 @@ nav{
 /* ===== 滿版舞台廣告圖區 ===== */
 .luxe-hero-stage {
     width: 100vw; margin-top: 79px; 
-    position: relative; overflow: hidden; background: #000000;
+    position: relative; overflow: hidden; background: #ffffff;
     scroll-snap-align: start; scroll-snap-stop: always;
     border-bottom: 1px solid var(--gold-dim);
 }
 .luxe-hero-stage .main-banner-link { display: block; width: 100%; height: 100%; position: relative; }
 .luxe-hero-stage img.stage-full-poster {
     width: 100vw; height: auto; min-height: 55vh; max-height: 85vh;
-    object-fit: cover; display: block; filter: contrast(105%) brightness(95%);
+    object-fit: cover; display: block; filter: contrast(100%) brightness(98%);
 }
 
 .stage-buy-btn {
     position: absolute; bottom: 12%; left: 8%;   
     display: block; width: auto; min-width: 190px;
     padding: 16px 32px; border: 1px solid var(--gold); 
-    background: #000000; color: var(--gold); 
+    background: #ffffff; color: var(--gold); 
     font-size: 11px; font-weight: bold; letter-spacing: 4px; 
     text-decoration: none; text-align: center; overflow: hidden;
-    box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.1);
     transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); z-index: 10; cursor: pointer;
 }
 .stage-buy-btn::after {
     content: ''; position: absolute; inset: 0; background: var(--gold); transform: translateY(100%);
     z-index: -1; transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
-.stage-buy-btn:hover { color: #0d0d0d; transform: translateY(-3px); }
+.stage-buy-btn:hover { color: #ffffff; transform: translateY(-3px); }
 .stage-buy-btn:hover::after { transform: translateY(0); }
 
 /* ===== 窄版跑馬燈 ===== */
 .liquid-death-marquee {
-    width: 100vw; background: #050505; overflow: hidden;
+    width: 100vw; background: #fdfcf9; overflow: hidden;
     padding: 14px 0; display: flex; align-items: center; 
     border-top: 1px solid var(--gold-dim); border-bottom: 1px solid var(--gold-dim);
 }
 .death-track { display: flex; width: max-content; animation: deathMarqueeLoop 30s linear infinite; }
 .death-block {
     display: flex; align-items: center; gap: 45px; padding: 0 22px;
-    color: rgba(255, 255, 255, 0.4); font-size: 12px; font-weight: 700; letter-spacing: 5px; 
+    color: rgba(0, 0, 0, 0.5); font-size: 12px; font-weight: 700; letter-spacing: 5px; 
     white-space: nowrap; text-transform: uppercase;
 }
-.death-block span.highlight { color: var(--gold); text-shadow: 0 0 10px rgba(207, 163, 76, 0.2); }
-.death-block span.outline { color: transparent; -webkit-text-stroke: 1px rgba(255, 255, 255, 0.3); }
+.death-block span.highlight { color: var(--gold); text-shadow: 0 0 10px rgba(207, 163, 76, 0.1); }
+.death-block span.outline { color: transparent; -webkit-text-stroke: 1px rgba(0, 0, 0, 0.4); }
 .death-separator { font-size: 11px; color: var(--gold-dim); }
 
 @keyframes deathMarqueeLoop { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
@@ -217,9 +216,9 @@ section{
 .hero h1 {
     font-family: 'Cinzel', serif; font-size: clamp(50px, 12vw, 150px); font-weight: 900;
     letter-spacing: clamp(15px, 4vw, 40px); text-indent: clamp(15px, 4vw, 40px);
-    background: linear-gradient(180deg, #ffffff 20%, var(--gold) 65%, rgba(13,13,13,0.9) 100%); 
+    background: linear-gradient(180deg, #111111 20%, var(--gold) 65%, rgba(255,255,255,0.9) 100%); 
     -webkit-background-clip: text; -webkit-text-fill-color: transparent; color: transparent;
-    filter: drop-shadow(0 0 25px rgba(207, 163, 76, 0.15));
+    filter: drop-shadow(0 0 25px rgba(207, 163, 76, 0.1));
     opacity: 0; transform: scale(0.96); transition: all 2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 body:not(.loading) .hero h1 { opacity: 1; transform: scale(1); }
@@ -231,7 +230,7 @@ body:not(.loading) .hero h1 { opacity: 1; transform: scale(1); }
 .sloganLoop{ margin-top: 50px; position: relative; height: 30px; width: 100%; overflow: hidden; }
 .sloganLoop span{
     position: absolute; width: 100%; left: 0; opacity: 0; font-size: 14px; letter-spacing: 4px;
-    color: rgba(255, 255, 255, 0.4); animation: rotateText 12s infinite;
+    color: rgba(0, 0, 0, 0.5); animation: rotateText 12s infinite;
 }
 .sloganLoop span:nth-child(1) { animation-delay: 0s; }
 .sloganLoop span:nth-child(2) { animation-delay: 3s; color: var(--gold); }
@@ -269,10 +268,10 @@ body:not(.loading) .hero h1 { opacity: 1; transform: scale(1); }
 .visual-silence .implode-ring { position: absolute; border: 1px solid var(--gold-dim); border-radius: 50%; width: 250px; height: 250px; animation: implodeEffect 4s infinite cubic-bezier(0.5, 0, 0.2, 1); }
 .visual-silence .implode-ring:nth-child(2) { animation-delay: 1.2s; }
 
-.visual-atmosphere { filter: blur(8px) contrast(1.2); }
-.visual-atmosphere .aura { position: absolute; border-radius: 50%; mix-blend-mode: screen; }
-.visual-atmosphere .aura1 { width: 130px; height: 130px; background: rgba(207,163,76,0.25); animation: orbit1 8s infinite alternate ease-in-out; }
-.visual-atmosphere .aura2 { width: 160px; height: 160px; background: rgba(255,255,255,0.05); animation: orbit2 10s infinite alternate-reverse ease-in-out; }
+.visual-atmosphere { filter: blur(8px) contrast(1.1); }
+.visual-atmosphere .aura { position: absolute; border-radius: 50%; mix-blend-mode: multiply; }
+.visual-atmosphere .aura1 { width: 130px; height: 130px; background: rgba(207,163,76,0.15); animation: orbit1 8s infinite alternate ease-in-out; }
+.visual-atmosphere .aura2 { width: 160px; height: 160px; background: rgba(0,0,0,0.03); animation: orbit2 10s infinite alternate-reverse ease-in-out; }
 
 .visual-awakening .shard { position: absolute; width: 45px; height: 45px; border: 1px solid var(--gold); }
 .visual-awakening .shard1 { animation: awakeExplode 3s infinite cubic-bezier(0.8, 0, 0.2, 1); }
@@ -284,15 +283,13 @@ body:not(.loading) .hero h1 { opacity: 1; transform: scale(1); }
 @keyframes awakeExplode { 0% { transform: rotate(0deg) scale(0.2); border-color: transparent; } 40% { transform: rotate(180deg) scale(2); border-color: var(--gold); background: rgba(207, 163, 76, 0.05); } 100% { transform: rotate(360deg) scale(0.2); border-color: transparent; } }
 
 /* ===== MANIFESTO ===== */
-.manifestoTitle{ font-size: clamp(34px, 6vw, 60px); line-height: 1.3; font-weight: 700; color: #ffffff; }
+.manifestoTitle{ font-size: clamp(34px, 6vw, 60px); line-height: 1.3; font-weight: 700; color: #111111; }
 .manifestoText{ margin-top: 50px; max-width: 680px; line-height: 2.4; letter-spacing: 2px; color: var(--gray-light); font-size: 15px; margin-inline: auto; font-weight: 300;}
 
 /* ===== MANIFESTO FULL SCREEN MODAL ===== */
 .manifesto-modal {
     position: fixed; inset: 0; z-index: 10005; 
-    /* 🎯 變更項目：底色由極暗黑色 (#050505) 改為高奢純白色 (#ffffff) */
     background: #ffffff; 
-    /* 🎯 變更項目：預設內文基礎顏色改為深炭黑色，確保白底上的閱讀舒適度 */
     color: #111111; 
     display: flex; justify-content: center; align-items: center; opacity: 0; pointer-events: none;
     transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1); overflow-y: auto; padding: 80px 20px;
@@ -300,18 +297,14 @@ body:not(.loading) .hero h1 { opacity: 1; transform: scale(1); }
 .manifesto-modal.active { opacity: 1; pointer-events: auto; }
 .modal-close {
     position: fixed; top: 30px; right: 40px; font-size: 44px;
-    /* 🎯 變更項目：關閉按鈕（×）在白底下改為極致俐落的炭黑色，Hover 時才顯現標誌金 */
     color: #111111; cursor: pointer; font-weight: 300; transition: transform 0.4s ease, color 0.3s; z-index: 10006;
 }
 .modal-close:hover { transform: rotate(90deg); color: var(--gold); }
 .modal-content { max-width: 760px; width: 100%; text-align: left; margin: auto; }
 .modal-subtitle { font-size: 12px; letter-spacing: 6px; color: var(--gold); margin-bottom: 20px; font-weight: 700; }
-/* 🎯 變更項目：標題在白底下改為純黑色 (#000000)，呈現高對比視覺衝擊 */
 .modal-title { font-family: 'Cinzel', serif; font-size: clamp(36px, 6vw, 64px); line-height: 1.1; color: #000000; margin-bottom: 50px; }
-/* 🎯 變更項目：段落字體改為高對比深灰色 (rgba(0, 0, 0, 0.8)) */
 .modal-text p { font-size: 15px; line-height: 2.4; letter-spacing: 2px; color: rgba(0, 0, 0, 0.8); margin-bottom: 30px; font-weight: 300; }
 .modal-text p strong { color: var(--gold); font-weight: 600; }
-/* 🎯 變更項目：斜體引用區塊邊框加深 */
 .modal-text p.highlight-quote { 
     font-size: 18px; color: var(--gold); font-style: italic; border-left: 2px solid var(--gold); 
     padding-left: 20px; margin-top: 50px; padding-top: 5px; padding-bottom: 5px;
@@ -319,7 +312,7 @@ body:not(.loading) .hero h1 { opacity: 1; transform: scale(1); }
 
 /* ===== MEMBERSHIP MODAL ===== */
 .member-modal {
-    position: fixed; inset: 0; z-index: 10010; background: rgba(5, 5, 5, 0.85);
+    position: fixed; inset: 0; z-index: 10010; background: rgba(255, 255, 255, 0.9);
     backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
     display: flex; justify-content: center; align-items: center; opacity: 0; pointer-events: none;
     transition: opacity 0.5s ease; padding: 20px;
@@ -327,14 +320,14 @@ body:not(.loading) .hero h1 { opacity: 1; transform: scale(1); }
 .member-modal.active { opacity: 1; pointer-events: auto; }
 
 .member-card-box {
-    width: 100%; max-width: 460px; margin: auto; background: var(--dark);
+    width: 100%; max-width: 460px; margin: auto; background: #ffffff;
     border: 1px solid var(--gold); padding: 50px 40px; position: relative;
     transform: translateY(20px); transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-    box-shadow: 0 30px 70px rgba(0, 0, 0, 0.8);
+    box-shadow: 0 30px 70px rgba(0, 0, 0, 0.1);
 }
 .member-modal.active .member-card-box { transform: translateY(0); }
 
-.member-title { font-family: 'Cinzel', serif; font-size: 24px; font-weight: 400; letter-spacing: 4px; color: #ffffff; margin-bottom: 12px; }
+.member-title { font-family: 'Cinzel', serif; font-size: 24px; font-weight: 400; letter-spacing: 4px; color: #111111; margin-bottom: 12px; }
 .member-subtitle { font-size: 12px; letter-spacing: 1px; color: var(--gray-light); margin-bottom: 35px; line-height: 1.8; }
 .member-subtitle strong { color: var(--gold); font-weight: 500; }
 
@@ -345,13 +338,13 @@ body:not(.loading) .hero h1 { opacity: 1; transform: scale(1); }
 /* ===== 塑料擊殺計數器視覺 ===== */
 .plastic-killer-dashboard {
     margin: 50px auto 60px auto;
-    background: rgba(5, 5, 5, 0.6);
+    background: rgba(253, 252, 249, 0.8);
     border: 1px solid var(--gold-dim);
     padding: 40px 30px;
     width: 100%;
     max-width: 650px;
     position: relative;
-    box-shadow: inset 0 0 25px rgba(207, 163, 76, 0.05);
+    box-shadow: inset 0 0 25px rgba(207, 163, 76, 0.03);
 }
 .killer-badge {
     font-size: 10px;
@@ -364,9 +357,9 @@ body:not(.loading) .hero h1 { opacity: 1; transform: scale(1); }
     font-family: 'Cinzel', serif;
     font-size: clamp(44px, 6vw, 72px);
     font-weight: 900;
-    color: #ffffff;
+    color: #111111;
     letter-spacing: 2px;
-    text-shadow: 0 0 30px rgba(255, 255, 255, 0.2);
+    text-shadow: 0 0 30px rgba(0, 0, 0, 0.05);
     margin-bottom: 12px;
 }
 .counter-desc {
@@ -381,7 +374,7 @@ body:not(.loading) .hero h1 { opacity: 1; transform: scale(1); }
     justify-content: center;
     align-items: center;
     gap: 30px;
-    border-top: 1px dashed rgba(207, 163, 76, 0.2);
+    border-top: 1px dashed rgba(207, 163, 76, 0.3);
     padding-top: 25px;
 }
 .eq-box {
@@ -391,7 +384,7 @@ body:not(.loading) .hero h1 { opacity: 1; transform: scale(1); }
 }
 .eq-label {
     font-size: 10px;
-    color: rgba(255,255,255,0.4);
+    color: rgba(0,0,0,0.5);
     letter-spacing: 2px;
     margin-bottom: 8px;
 }
@@ -408,22 +401,23 @@ body:not(.loading) .hero h1 { opacity: 1; transform: scale(1); }
 .eq-divider {
     width: 1px;
     height: 40px;
-    background: rgba(207, 163, 76, 0.2);
+    background: rgba(207, 163, 76, 0.3);
 }
 
 /* ===== COOKIE 隱私權彈窗高奢硬派樣式 ===== */
 .cookie-law-banner {
-    position: fixed; bottom: -200px; left: 0; width: 100%; background: rgba(5, 5, 5, 0.95);
+    position: fixed; bottom: -200px; left: 0; width: 100%; background: rgba(255, 255, 255, 0.98);
     border-top: 1px solid var(--gold-dim); padding: 25px 50px; z-index: 999999;
     display: flex; justify-content: space-between; align-items: center; gap: 40px;
     backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
     transition: bottom 0.8s cubic-bezier(0.16, 1, 0.3, 1); opacity: 0;
+    box-shadow: 0 -10px 30px rgba(0,0,0,0.05);
 }
 .cookie-law-banner.active { bottom: 0; opacity: 1; }
 .cookie-left { text-align: left; max-width: 75%; }
 .cookie-title-sec { font-family: 'Cinzel', serif; font-size: 11px; letter-spacing: 3px; color: var(--gold); margin-bottom: 6px; font-weight: bold; }
 .cookie-text-sec { font-size: 12px; letter-spacing: 1px; color: var(--gray-light); line-height: 1.8; font-weight: 300; }
-.cookie-text-sec strong { color: #ffffff; font-weight: 500; }
+.cookie-text-sec strong { color: #111111; font-weight: 500; }
 .cookie-right { width: 220px; flex-shrink: 0; }
 .cookie-right button { padding: 12px 24px; font-size: 10px; letter-spacing: 3px; }
 
@@ -435,8 +429,8 @@ body:not(.loading) .hero h1 { opacity: 1; transform: scale(1); }
 
 .input-group { position: relative; margin-bottom: 30px; text-align: left; }
 .input-group input {
-    width: 100%; background: transparent; border: none; border-bottom: 1px solid rgba(207, 163, 76, 0.3);
-    padding: 12px 0; color: #ffffff; font-size: 14px; letter-spacing: 1px; outline: none; transition: border-color 0.3s;
+    width: 100%; background: transparent; border: none; border-bottom: 1px solid rgba(207, 163, 76, 0.4);
+    padding: 12px 0; color: #111111; font-size: 14px; letter-spacing: 1px; outline: none; transition: border-color 0.3s;
 }
 .input-group::after {
     content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 1px;
@@ -446,16 +440,16 @@ body:not(.loading) .hero h1 { opacity: 1; transform: scale(1); }
 .input-group:focus-within::after { transform: scaleX(1); }
 .input-group label {
     position: absolute; left: 0; top: 12px; font-size: 11px; letter-spacing: 2px;
-    color: rgba(255, 255, 255, 0.35); pointer-events: none; transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    color: rgba(0, 0, 0, 0.4); pointer-events: none; transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .input-group input:focus ~ label, .input-group input:not(:placeholder-shown) ~ label { top: -14px; font-size: 10px; color: var(--gold); }
 
 /* ===== PRODUCTS ===== */
-#products { background: var(--dark-deep); border-top: 1px solid rgba(207, 163, 76, 0.1); border-bottom: 1px solid rgba(207, 163, 76, 0.1); }
+#products { background: #fdfcf9; border-top: 1px solid rgba(207, 163, 76, 0.2); border-bottom: 1px solid rgba(207, 163, 76, 0.2); }
 .products-single-wrapper { width: 100%; max-width: 720px; margin: 0 auto; }
 .card-single {
-    background: rgba(207, 163, 76, 0.01); border: 1px solid rgba(207, 163, 76, 0.15);
-    padding: 80px 60px; text-align: left; position: relative; box-shadow: 0 40px 90px rgba(0,0,0,0.5);
+    background: #ffffff; border: 1px solid rgba(207, 163, 76, 0.25);
+    padding: 80px 60px; text-align: left; position: relative; box-shadow: 0 40px 90px rgba(0,0,0,0.04);
     transition: background 0.4s ease;
 }
 .card-single::before {
@@ -464,14 +458,14 @@ body:not(.loading) .hero h1 { opacity: 1; transform: scale(1); }
     transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1); pointer-events: none;
 }
 .card-single:hover::before { opacity: 1; transform: scale(1); }
-.card-single:hover { background: rgba(207, 163, 76, 0.03); }
+.card-single:hover { background: rgba(207, 163, 76, 0.02); }
 
-.product-badge { font-size: 10px; letter-spacing: 4px; text-indent: 4px; color: var(--gold); display: inline-block; margin-bottom: 15px; border: 1px solid rgba(207, 163, 76, 0.4); padding: 3px 10px; font-weight: bold; }
-.card-single h3 { font-family: 'Cinzel', serif; color: #ffffff; font-size: clamp(30px, 5vw, 52px); letter-spacing: 4px; text-indent: 4px; font-weight: 400; margin-bottom: 10px; }
+.product-badge { font-size: 10px; letter-spacing: 4px; text-indent: 4px; color: var(--gold); display: inline-block; margin-bottom: 15px; border: 1px solid rgba(207, 163, 76, 0.5); padding: 3px 10px; font-weight: bold; }
+.card-single h3 { font-family: 'Cinzel', serif; color: #111111; font-size: clamp(30px, 5vw, 52px); letter-spacing: 4px; text-indent: 4px; font-weight: 400; margin-bottom: 10px; }
 .product-subtitle { color: var(--gold); margin-bottom: 40px; font-size: 14px; letter-spacing: 2px; font-weight: bold; }
-.product-description { color: var(--gray-light); font-size: 15px; line-height: 2.2; letter-spacing: 1px; border-top: 1px solid rgba(207, 163, 76, 0.15); padding-top: 30px; font-weight: 300; }
+.product-description { color: var(--gray-light); font-size: 15px; line-height: 2.2; letter-spacing: 1px; border-top: 1px solid rgba(207, 163, 76, 0.2); padding-top: 30px; font-weight: 300; }
 .product-specs { list-style: none; margin-top: 30px; }
-.product-specs li { font-size: 13px; margin-bottom: 14px; color: #ffffff; display: flex; align-items: center; }
+.product-specs li { font-size: 13px; margin-bottom: 14px; color: #111111; display: flex; align-items: center; }
 .product-specs li span { font-size: 10px; color: var(--gold); letter-spacing: 2px; width: 120px; display: inline-block; font-weight: bold; }
 
 /* ===== BUTTONS ===== */
@@ -485,23 +479,23 @@ button::after, .magnetic-btn-link::after {
     content: ''; position: absolute; inset: 0; background: var(--gold); transform: translateY(100%);
     z-index: -1; transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
-button:hover, .magnetic-btn-link:hover { color: #0d0d0d; }
+button:hover, .magnetic-btn-link:hover { color: #ffffff; }
 button:hover::after, .magnetic-btn-link:hover::after { transform: translateY(0); }
 
 /* ===== ECO & TEASER ===== */
-.ecoTitle, .teaserTitle{ font-size: clamp(34px, 5vw, 68px); line-height: 1.2; font-weight: 700; color: #ffffff; font-family: 'Cinzel', serif; }
+.ecoTitle, .teaserTitle{ font-size: clamp(34px, 5vw, 68px); line-height: 1.2; font-weight: 700; color: #111111; font-family: 'Cinzel', serif; }
 .ecoText, .teaserText{ margin-top: 40px; max-width: 680px; line-height: 2.2; letter-spacing: 2px; color: var(--gray-light); font-size: 15px; margin-inline: auto; font-weight: 300; }
 .ecoGrid{ margin-top: 50px; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 40px; width: 100%; }
-.ecoCard, .timeBox{ background: transparent; border: 1px solid rgba(207, 163, 76, 0.15); padding: 50px 30px; transition: all 0.4s; }
-.ecoCard:hover{ border-color: var(--gold); background: rgba(207, 163, 76, 0.02); transform: translateY(-4px); }
+.ecoCard, .timeBox{ background: transparent; border: 1px solid rgba(207, 163, 76, 0.25); padding: 50px 30px; transition: all 0.4s; }
+.ecoCard:hover{ border-color: var(--gold); background: rgba(207, 163, 76, 0.03); transform: translateY(-4px); }
 .ecoCard h3{ font-family: 'Cinzel', serif; font-size: 28px; margin-bottom: 15px; font-weight: 400; color: var(--gold); }
 .ecoCard p { font-size: 12px; color: var(--gray-light); letter-spacing: 2px; font-weight: 300; }
 
 /* ===== COUNTDOWN ===== */
 .countdown{ margin-top: 60px; margin-bottom: 40px; display: flex; gap: 30px; flex-wrap: wrap; justify-content: center; }
-.timeBox{ width: 100px; height: 100px; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+.timeBox{ width: 100px; height: 100px; display: flex; flex-direction: column; justify-content: center; align-items: center; background: #ffffff; }
 .timeBox span{ font-family: 'Cinzel', serif; font-size: 32px; font-weight: 400; color: var(--gold); font-variant-numeric: tabular-nums; }
-.timeLabel { font-size: 9px; letter-spacing: 3px; text-indent: 3px; color: rgba(255,255,255,0.4); margin-top: 8px; font-weight: bold; }
+.timeLabel { font-size: 9px; letter-spacing: 3px; text-indent: 3px; color: rgba(0,0,0,0.4); margin-top: 8px; font-weight: bold; }
 
 /* ===== EMAIL SUBSCRIBE BOX ===== */
 .subscribe-box {
@@ -511,9 +505,9 @@ button:hover::after, .magnetic-btn-link:hover::after { transform: translateY(0);
 .subscribe-box:focus-within { border-color: var(--gold); }
 .subscribe-box input {
     flex: 1; background: transparent; border: none; outline: none;
-    color: #ffffff; font-size: 11px; letter-spacing: 3px;
+    color: #111111; font-size: 11px; letter-spacing: 3px;
 }
-.subscribe-box input::placeholder { color: rgba(255,255,255,0.25); }
+.subscribe-box input::placeholder { color: rgba(0,0,0,0.3); }
 .subscribe-box button { width: auto; padding: 0 10px; border: none; color: var(--gold); background: transparent; font-size: 16px; cursor: pointer; transition: transform 0.3s; }
 .subscribe-box button::after { display: none; }
 .subscribe-box button:hover { transform: translateX(5px); background: transparent; }
@@ -521,22 +515,22 @@ button:hover::after, .magnetic-btn-link:hover::after { transform: translateY(0);
 /* ===== TOAST MESSAGE ===== */
 .custom-toast {
     position: fixed; bottom: -100px; left: 50%; transform: translateX(-50%);
-    background: #111111; color: var(--gold); padding: 12px 24px; font-size: 11px; letter-spacing: 2px;
-    border: 1px solid var(--gold); box-shadow: 0 15px 40px rgba(0,0,0,0.5); z-index: 100015;
+    background: #ffffff; color: var(--gold); padding: 12px 24px; font-size: 11px; letter-spacing: 2px;
+    border: 1px solid var(--gold); box-shadow: 0 15px 40px rgba(0,0,0,0.08); z-index: 100015;
     transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1); opacity: 0;
 }
 .custom-toast.show { bottom: 40px; opacity: 1; }
 
 /* ===== FOOTER ===== */
 footer{ 
-    padding: 100px 40px; text-align: center; border-top: 1px solid rgba(207, 163, 76, 0.15); background: var(--dark-deep); 
+    padding: 100px 40px; text-align: center; border-top: 1px solid rgba(207, 163, 76, 0.2); background: #fdfcf9; 
     scroll-snap-align: end; 
 }
 .footerLogo{ 
     font-family: 'Cinzel', serif; letter-spacing: 6px; text-indent: 6px; margin-bottom: 40px; font-weight: 700; font-size: 18px; text-decoration: none; color: var(--gold); display: inline-block; 
 }
 .footerLinks{ display: flex; justify-content: center; gap: 40px; font-size: 11px; letter-spacing: 3px; }
-.footerLinks a{ color: rgba(255, 255, 255, 0.4); cursor: pointer; text-decoration: none; transition: color 0.3s; }
+.footerLinks a{ color: rgba(0, 0, 0, 0.5); cursor: pointer; text-decoration: none; transition: color 0.3s; }
 .footerLinks a:hover{ color: var(--gold); }
 
 /* ===== 底部的極簡 Instagram 傳送口 ===== */
@@ -552,7 +546,7 @@ footer{
     align-items: center;
     gap: 10px;
     text-decoration: none;
-    color: rgba(255, 255, 255, 0.25);
+    color: rgba(0, 0, 0, 0.4);
     transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     padding: 8px 16px;
     border: 1px solid transparent;
@@ -571,19 +565,19 @@ footer{
     font-size: 10px;
     letter-spacing: 3px;
     font-weight: bold;
-    opacity: 0.6;
+    opacity: 0.7;
     transition: opacity 0.4s ease;
 }
 .instagram-portal:hover {
     color: var(--gold);
-    border-color: rgba(207, 163, 76, 0.2);
-    background: rgba(207, 163, 76, 0.02);
-    filter: drop-shadow(0 0 8px rgba(207, 163, 76, 0.3));
+    border-color: rgba(207, 163, 76, 0.3);
+    background: rgba(207, 163, 76, 0.04);
+    filter: drop-shadow(0 0 8px rgba(207, 163, 76, 0.15));
 }
 .instagram-portal:hover .ig-icon { transform: scale(1.08) rotate(-3deg); }
 .instagram-portal:hover .ig-text { opacity: 1; }
 
-footer p{ margin-top: 60px; font-size: 11px; letter-spacing: 2px; color: rgba(255, 255, 255, 0.25); }
+footer p{ margin-top: 60px; font-size: 11px; letter-spacing: 2px; color: rgba(0, 0, 0, 0.4); }
 
 /* ===== ANIMATIONS ===== */
 @keyframes lineGrow{ to{ width: 300px; } }
@@ -606,13 +600,13 @@ footer p{ margin-top: 60px; font-size: 11px; letter-spacing: 2px; color: rgba(25
     
     .navRight {
         position: fixed; top: 0; right: -100%; width: 75%; height: 100vh;
-        background: rgba(13, 13, 13, 0.98); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+        background: rgba(255, 255, 255, 0.98); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
         flex-direction: column; justify-content: center; gap: 40px; transition: right 0.5s ease;
         border-left: 1px solid rgba(207, 163, 76, 0.2); display: flex; z-index: 1002;
     }
     .navRight.active { right: 0; }
     .navLinks { flex-direction: column; gap: 35px; }
-    .navLinks a { font-size: 16px; letter-spacing: 4px; }
+    .navLinks a { font-size: 16px; letter-spacing: 4px; color: #111111; }
     
     .navLinks a#navSignInBtn { gap: 8px; }
     .navLinks a#navSignInBtn .coffin-text { max-width: 80px; opacity: 0.7; }
@@ -798,7 +792,6 @@ footer p{ margin-top: 60px; font-size: 11px; letter-spacing: 2px; color: rgba(25
             Because timeless luxury should never destroy the future.
         </p>
 
-        <!-- 環保塑料擊殺計數器 -->
         <div class="plastic-killer-dashboard">
             <div class="killer-badge">LIVE PLASTIC EXECUTION TRACKER</div>
             <div class="counter-huge">
@@ -866,7 +859,6 @@ footer p{ margin-top: 60px; font-size: 11px; letter-spacing: 2px; color: rgba(25
         <a href="#eco">KILL PLASTIC</a>
     </div>
 
-    <!-- 低調且精緻的 Instagram 傳送口 -->
     <div class="footer-social-stage">
         <a href="https://www.instagram.com/你的帳號" target="_blank" class="instagram-portal" aria-label="Follow HELL 2 OVER on Instagram">
             <svg viewBox="0 0 24 24" class="ig-icon">
@@ -881,7 +873,6 @@ footer p{ margin-top: 60px; font-size: 11px; letter-spacing: 2px; color: rgba(25
     <p>© 2026 HELL 2 OVER. Murder your thirst. Beyond hydration.</p>
 </footer>
 
-<!-- COOKIE 隱私權彈窗 HTML 結構 -->
 <div class="cookie-law-banner" id="cookieBanner">
     <div class="cookie-left">
         <div class="cookie-title-sec">DIGITAL FOOTPRINT ENGAGEMENT</div>
@@ -910,7 +901,7 @@ footer p{ margin-top: 60px; font-size: 11px; letter-spacing: 2px; color: rgba(25
 
 <div class="member-modal" id="memberModal">
     <div class="member-card-box">
-        <div class="modal-close" id="closeMemberBtn" style="top: 25px; right: 30px; font-size: 32px;">×</div>
+        <div class="modal-close" id="closeMemberBtn" style="top: 25px; right: 30px; font-size: 32px; color: #111111;">×</div>
         
         <h2 class="member-title" id="memberModalTitle">SUMMON CONTRACT</h2>
         <p class="member-subtitle" id="memberModalSubtitle">輸入綁定信箱以驗證洗鍊資格。<br><strong>簽署契約者皆可提前獲取全球首發限定情報。</strong></p>
@@ -934,7 +925,7 @@ footer p{ margin-top: 60px; font-size: 11px; letter-spacing: 2px; color: rgba(25
                 </div>
                 <div class="member-action">
                     <button type="submit">VERIFY CONTRACT</button>
-                    <p id="otpTimer" style="font-size: 10px; color: rgba(255,255,255,0.4); margin-top: 15px; letter-spacing: 1px; text-align: center;">
+                    <p id="otpTimer" style="font-size: 10px; color: rgba(0,0,0,0.5); margin-top: 15px; letter-spacing: 1px; text-align: center;">
                         RESEND CODE IN <span id="cooldownNum">60</span>S
                     </p>
                 </div>

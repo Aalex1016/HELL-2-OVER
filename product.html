@@ -14,16 +14,16 @@
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Noto+Sans+TC:wght@300;500;900&display=swap" rel="stylesheet">
 
 <style>
-/* ===== 系統變數優化 (CSS Variables) ===== */
+/* ===== 系統變數優化 (白金極簡風) ===== */
 :root {
-    --gold: #cfa34c;
-    --gold-dim: rgba(207, 163, 76, 0.3);
-    --gold-light: rgba(207, 163, 76, 0.04);
-    --dark: #0d0d0d;
-    --dark-deep: #050505;
-    --gray-light: rgba(255, 255, 255, 0.65);
-    --bg-main: #0d0d0d;
-    --bg-panel: rgba(207, 163, 76, 0.01);
+    --gold: #b38b36; /* 稍微加深金色，在白底上更具閱讀性 */
+    --gold-dim: rgba(179, 139, 54, 0.3);
+    --gold-light: rgba(179, 139, 54, 0.04);
+    --dark: #1a1a1a; /* 替代原本的純黑文字 */
+    --dark-deep: #f9f9f9; /* 頁尾改用極淺灰，做出層次 */
+    --gray-light: #666666; /* 調整灰色，確保白底上的辨識度 */
+    --bg-main: #ffffff; /* 🎯 背景核心改為純白 */
+    --bg-panel: rgba(179, 139, 54, 0.02);
 }
 
 /* ===== 基礎重置與效能優化 ===== */
@@ -31,7 +31,7 @@
 body{
     font-family: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, sans-serif;
     background: var(--bg-main); 
-    color: #ffffff; 
+    color: var(--dark); 
     overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
@@ -44,25 +44,25 @@ body.loading { overflow: hidden; }
 
 /* ===== 自訂義游標 ===== */
 .cursor-dot { width: 6px; height: 6px; background: var(--gold); position: fixed; pointer-events: none; z-index: 100115; border-radius: 50%; transform: translate(-50%, -50%); will-change: left, top; }
-.cursor-outline { width: 32px; height: 32px; border: 1px solid rgba(207, 163, 76, 0.4); position: fixed; pointer-events: none; z-index: 100114; border-radius: 50%; transform: translate(-50%, -50%); transition: width 0.3s, height 0.3s, background-color 0.3s, border-color 0.3s; will-change: left, top, width, height; }
-.cursor-hover .cursor-outline { width: 55px; height: 55px; background: rgba(207, 163, 76, 0.1); border-color: var(--gold); opacity: 1; } 
+.cursor-outline { width: 32px; height: 32px; border: 1px solid rgba(179, 139, 54, 0.4); position: fixed; pointer-events: none; z-index: 100114; border-radius: 50%; transform: translate(-50%, -50%); transition: width 0.3s, height 0.3s, background-color 0.3s, border-color 0.3s; will-change: left, top, width, height; }
+.cursor-hover .cursor-outline { width: 55px; height: 55px; background: rgba(179, 139, 54, 0.1); border-color: var(--gold); opacity: 1; } 
 
 /* ===== 背景層 ===== */
-.noise{ position: fixed; inset: 0; pointer-events: none; z-index: 998; opacity: 0.05; background-image: url("https://grainy-gradients.vercel.app/noise.svg"); mix-blend-mode: overlay; }
-.bg{ position: fixed; inset: 0; z-index: -2; background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(207, 163, 76, 0.08), transparent 45%), radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(255, 255, 255, 0.02), transparent 70%); will-change: background; }
+.noise{ position: fixed; inset: 0; pointer-events: none; z-index: 998; opacity: 0.03; background-image: url("https://grainy-gradients.vercel.app/noise.svg"); mix-blend-mode: multiply; }
+.bg{ position: fixed; inset: 0; z-index: -2; background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(179, 139, 54, 0.06), transparent 45%), radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(0, 0, 0, 0.01), transparent 70%); will-change: background; }
 
 /* ===== ORBS ===== */
 .orb{ position: fixed; border-radius: 50%; filter: blur(140px); pointer-events: none; z-index: -1; will-change: transform; }
-.orb1{ width: 500px; height: 500px; background: #261f12; top: -15%; left: -10%; opacity: 0.4; animation: orbFloat1 20s infinite ease-in-out; }
-.orb2{ width: 550px; height: 550px; background: #141414; bottom: -10%; right: -10%; opacity: 0.5; animation: orbFloat2 25s infinite ease-in-out; }
+.orb1{ width: 500px; height: 500px; background: #f3ede2; top: -15%; left: -10%; opacity: 0.6; animation: orbFloat1 20s infinite ease-in-out; }
+.orb2{ width: 550px; height: 550px; background: #f5f5f5; bottom: -10%; right: -10%; opacity: 0.7; animation: orbFloat2 25s infinite ease-in-out; }
 
 /* ===== 導航列 ===== */
 nav{ 
     position: fixed; top: 0; left: 0; width: 100%; padding: 25px 50px; 
     display: flex; justify-content: space-between; align-items: center; 
-    background: linear-gradient(to bottom, rgba(13,13,13,0.95), rgba(13,13,13,0.75)); 
+    background: linear-gradient(to bottom, rgba(255,255,255,0.95), rgba(255,255,255,0.75)); 
     backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-    z-index: 1001; border-bottom: 1px solid rgba(207, 163, 76, 0.15); 
+    z-index: 1001; border-bottom: 1px solid rgba(179, 139, 54, 0.15); 
 }
 .logo{ font-family: 'Cinzel', serif; letter-spacing: 6px; font-size: 20px; font-weight: 700; text-decoration: none; color: var(--gold); transition: opacity 0.3s; }
 .logo:hover { opacity: 0.8; }
@@ -95,14 +95,14 @@ nav{
 }
 .coffin-status-wrap svg .coffin-stroke {
     fill: none;
-    stroke: rgba(255, 255, 255, 0.5);
+    stroke: rgba(0, 0, 0, 0.4);
     stroke-width: 2;
     stroke-linejoin: round;
     transition: stroke 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .coffin-status-wrap svg .cross-fill {
     fill: none;
-    stroke: rgba(255, 255, 255, 0.5);
+    stroke: rgba(0, 0, 0, 0.4);
     stroke-width: 2.2;
     stroke-linecap: round;
     stroke-linejoin: round;
@@ -114,7 +114,7 @@ nav{
 .coffin-status-wrap:hover svg .coffin-stroke,
 .coffin-status-wrap:hover svg .cross-fill {
     stroke: var(--gold);
-    filter: drop-shadow(0 0 5px rgba(207, 163, 76, 0.5));
+    filter: drop-shadow(0 0 5px rgba(179, 139, 54, 0.3));
 }
 
 /* ===== 佈局與商品資訊 ===== */
@@ -126,13 +126,13 @@ nav{
 
 /* 商品展示與動畫 */
 .product-image-wrapper {
-    width: 100%; background: #050505; border: 1px solid rgba(207, 163, 76, 0.15);
+    width: 100%; background: #fafafa; border: 1px solid rgba(179, 139, 54, 0.15);
     padding: 40px; display: flex; align-items: center; justify-content: center;
     position: relative; overflow: hidden; height: 500px;
 }
 .liquid-blob {
     position: absolute; width: 350px; height: 350px;
-    background: linear-gradient(135deg, rgba(207, 163, 76, 0.15), rgba(207, 163, 76, 0.03));
+    background: linear-gradient(135deg, rgba(179, 139, 54, 0.1), rgba(179, 139, 54, 0.02));
     animation: liquidMorph 12s ease-in-out infinite alternate;
     z-index: 0; filter: blur(25px); pointer-events: none;
 }
@@ -143,7 +143,7 @@ nav{
 
 .main-product-video {
     width: 100%; max-width: 100%; height: auto; max-height: 400px; 
-    object-fit: contain; filter: drop-shadow(0 20px 40px rgba(0,0,0,0.6)); 
+    object-fit: contain; filter: drop-shadow(0 15px 30px rgba(0,0,0,0.1)); 
     position: relative; z-index: 1; animation: buoyancy 6s ease-in-out infinite; will-change: transform;
 }
 @keyframes buoyancy { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
@@ -154,22 +154,22 @@ nav{
 .concept-badge-item p { font-size: 11px; color: var(--gray-light); font-weight: 300; }
 
 /* 右側購買卡片 */
-.detail-right { background: rgba(207, 163, 76, 0.01); border: 1px solid rgba(207, 163, 76, 0.15); padding: 50px 40px; display: flex; flex-direction: column; justify-content: space-between; position: relative; box-shadow: 0 40px 90px rgba(0,0,0,0.5); } 
-.purchase-header h4 { font-family: 'Cinzel', serif; font-size: 22px; color: #ffffff; letter-spacing: 2px; margin-bottom: 8px; font-weight: 400; }
+.detail-right { background: rgba(179, 139, 54, 0.01); border: 1px solid rgba(179, 139, 54, 0.15); padding: 50px 40px; display: flex; flex-direction: column; justify-content: space-between; position: relative; box-shadow: 0 20px 50px rgba(0,0,0,0.04); } 
+.purchase-header h4 { font-family: 'Cinzel', serif; font-size: 22px; color: var(--dark); letter-spacing: 2px; margin-bottom: 8px; font-weight: 400; }
 .purchase-header .price { font-size: 22px; color: var(--gold); font-family: 'Cinzel', monospace; margin-bottom: 30px; }
 
 .option-group { margin-bottom: 35px; }
 .option-label { font-size: 10px; color: var(--gold); letter-spacing: 2px; margin-bottom: 12px; font-weight: bold; }
 .spec-selector { display: flex; gap: 15px; flex-wrap: wrap; }
-.spec-chip { border: 1px solid var(--gold-dim); padding: 10px 20px; font-size: 11px; color: var(--gray-light); letter-spacing: 1px; cursor: pointer; transition: all 0.3s ease; font-weight: bold; }
-.spec-chip.active, .spec-chip:hover { border-color: var(--gold); color: #0d0d0d; background: var(--gold); }
+.spec-chip { border: 1px solid var(--gold-dim); padding: 10px 20px; font-size: 11px; color: var(--gray-light); letter-spacing: 1px; cursor: pointer; transition: all 0.3s ease; font-weight: bold; background: transparent; }
+.spec-chip.active, .spec-chip:hover { border-color: var(--gold); color: #ffffff; background: var(--gold); }
 
-.specs-list { margin-top: 10px; padding-top: 25px; border-top: 1px solid rgba(207, 163, 76, 0.15); }
+.specs-list { margin-top: 10px; padding-top: 25px; border-top: 1px solid rgba(179, 139, 54, 0.15); }
 .spec-row { display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 12px; letter-spacing: 1px; }
 .spec-row .s-label { color: var(--gold); font-weight: bold; font-size: 10px; }
 .spec-row .s-value { color: var(--gray-light); font-weight: 300; }
 
-.total-summary { border-top: 1px solid rgba(207, 163, 76, 0.15); padding-top: 25px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+.total-summary { border-top: 1px solid rgba(179, 139, 54, 0.15); padding-top: 25px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
 .total-summary span { font-size: 12px; color: var(--gray-light); letter-spacing: 1px; }
 .total-summary .total-price { font-size: 24px; color: var(--gold); font-family: 'Cinzel', monospace; }
 
@@ -183,7 +183,7 @@ button::after {
     content: ''; position: absolute; inset: 0; background: var(--gold); transform: translateY(100%);
     z-index: -1; transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
-button:hover { color: #0d0d0d; } 
+button:hover { color: #ffffff; } 
 button:hover::after { transform: translateY(0); }
 
 /* Accordion 手風琴 */
@@ -191,17 +191,17 @@ button:hover::after { transform: translateY(0); }
 .section-title { font-family: 'Cinzel', serif; text-align: center; font-size: 20px; color: var(--gold); letter-spacing: 6px; font-weight: 400; margin-bottom: 40px; }
 .info-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; align-items: flex-start; }
 
-.info-card { background: rgba(207, 163, 76, 0.01); border: 1px solid rgba(207, 163, 76, 0.15); padding: 40px 30px; transition: transform 0.4s ease, background 0.4s ease, border-color 0.4s ease; will-change: transform; cursor: pointer; position: relative; overflow: hidden;}
-.info-card:hover { transform: translateY(-4px); background: rgba(207, 163, 76, 0.02); border-color: var(--gold); }
+.info-card { background: rgba(179, 139, 54, 0.01); border: 1px solid rgba(179, 139, 54, 0.15); padding: 40px 30px; transition: transform 0.4s ease, background 0.4s ease, border-color 0.4s ease; will-change: transform; cursor: pointer; position: relative; overflow: hidden;}
+.info-card:hover { transform: translateY(-4px); background: rgba(179, 139, 54, 0.02); border-color: var(--gold); }
 .card-header-flex { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
-.card-header-flex h4 { font-family: 'Cinzel', serif; font-size: 13px; color: #ffffff; letter-spacing: 2px; font-weight: 400; margin: 0;}
+.card-header-flex h4 { font-family: 'Cinzel', serif; font-size: 13px; color: var(--dark); letter-spacing: 2px; font-weight: 400; margin: 0;}
 .toggle-icon { font-size: 18px; color: var(--gold); font-weight: 300; transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
 .info-card p.short-desc { font-size: 12px; color: var(--gray-light); line-height: 2.2; letter-spacing: 1px; transition: opacity 0.3s; margin-bottom: 0; font-weight: 300;}
 
 .detail-content { max-height: 0; opacity: 0; overflow: hidden; transition: max-height 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.6s ease, margin-top 0.4s ease, padding-top 0.4s ease; }
-.detail-content p { font-size: 12px; color: #ffffff; line-height: 2.2; letter-spacing: 1px; font-weight: 300; }
+.detail-content p { font-size: 12px; color: var(--dark); line-height: 2.2; letter-spacing: 1px; font-weight: 300; }
 
-| info-card.expanded { background: rgba(207, 163, 76, 0.02); border-color: var(--gold); }
+.info-card.expanded { background: rgba(179, 139, 54, 0.02); border-color: var(--gold); }
 .info-card.expanded .toggle-icon { transform: rotate(135deg); }
 .info-card.expanded .short-desc { opacity: 0.5; }
 .info-card.expanded .detail-content { max-height: 400px; opacity: 1; margin-top: 20px; padding-top: 20px; border-top: 1px dashed var(--gold-dim); }
@@ -209,25 +209,25 @@ button:hover::after { transform: translateY(0); }
 /* Email 訂閱 */
 .subscribe-box { display: flex; width: 100%; max-width: 320px; margin: 0 auto; border-bottom: 1px solid var(--gold-dim); padding-bottom: 10px; transition: border-color 0.3s; }
 .subscribe-box:focus-within { border-color: var(--gold); }
-.subscribe-box input { flex: 1; background: transparent; border: none; outline: none; color: #ffffff; font-size: 11px; letter-spacing: 3px; font-weight: bold; }
-.subscribe-box input::placeholder { color: rgba(255,255,255,0.25); }
+.subscribe-box input { flex: 1; background: transparent; border: none; outline: none; color: var(--dark); font-size: 11px; letter-spacing: 3px; font-weight: bold; }
+.subscribe-box input::placeholder { color: rgba(0,0,0,0.25); }
 .subscribe-box button { width: auto; padding: 0 10px; border: none; color: var(--gold); background: transparent; font-size: 16px; cursor: pointer; transition: transform 0.3s; }
 .subscribe-box button::after { display: none; }
 .subscribe-box button:hover { transform: translateX(5px); background: transparent; }
 
 /* Spinner */
-.spinner { display: inline-block; width: 12px; height: 12px; margin-right: 8px; border: 2px solid rgba(255,255,255,0.3); border-radius: 50%; border-top-color: var(--gold); animation: spin 1s ease-in-out infinite; vertical-align: middle; }
+.spinner { display: inline-block; width: 12px; height: 12px; margin-right: 8px; border: 2px solid rgba(0,0,0,0.1); border-radius: 50%; border-top-color: var(--gold); animation: spin 1s ease-in-out infinite; vertical-align: middle; }
 @keyframes spin { to { transform: rotate(360deg); } }
 
 /* Toast */
-.custom-toast { position: fixed; bottom: -100px; left: 50%; transform: translateX(-50%); background: #111111; color: var(--gold); padding: 12px 24px; font-size: 11px; letter-spacing: 2px; border: 1px solid var(--gold); box-shadow: 0 15px 40px rgba(0,0,0,0.5); z-index: 100015; transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1); opacity: 0; pointer-events: none; }
+.custom-toast { position: fixed; bottom: -100px; left: 50%; transform: translateX(-50%); background: #ffffff; color: var(--gold); padding: 12px 24px; font-size: 11px; letter-spacing: 2px; border: 1px solid var(--gold); box-shadow: 0 15px 40px rgba(0,0,0,0.08); z-index: 100015; transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1); opacity: 0; pointer-events: none; }
 .custom-toast.show { bottom: 40px; opacity: 1; }
 
 .reveal-up { opacity: 0; transform: translateY(40px); transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1); will-change: transform, opacity; }
 .reveal-up.active { opacity: 1; transform: translateY(0); }
 .delay-1 { transition-delay: 0.1s; } .delay-2 { transition-delay: 0.2s; } .delay-3 { transition-delay: 0.3s; }
 
-footer { padding: 100px 40px; text-align: center; font-size: 11px; color: rgba(255, 255, 255, 0.25); border-top: 1px solid rgba(207, 163, 76, 0.15); letter-spacing: 2px; background: var(--dark-deep); }
+footer { padding: 100px 40px; text-align: center; font-size: 11px; color: rgba(0, 0, 0, 0.3); border-top: 1px solid rgba(179, 139, 54, 0.15); letter-spacing: 2px; background: var(--dark-deep); }
 
 @media(max-width: 900px){
     .detail-container { grid-template-columns: 1fr; gap: 40px; }
@@ -240,11 +240,11 @@ footer { padding: 100px 40px; text-align: center; font-size: 11px; color: rgba(2
     .mobile-sticky-buy {
         display: flex; justify-content: space-between; align-items: center;
         position: fixed; bottom: 0; left: 0; width: 100%;
-        background: rgba(13, 13, 13, 0.95); backdrop-filter: blur(10px);
-        border-top: 1px solid rgba(207, 163, 76, 0.2); padding: 15px 20px; z-index: 9995;
+        background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px);
+        border-top: 1px solid rgba(179, 139, 54, 0.2); padding: 15px 20px; z-index: 9995;
     }
     .mobile-sticky-buy .price { font-size: 16px; color: var(--gold); font-family: 'Cinzel', monospace; }
-    .mobile-sticky-buy a { background: var(--gold); color: #0d0d0d; text-decoration: none; padding: 10px 24px; font-size: 11px; font-weight: bold; letter-spacing: 2px; }
+    .mobile-sticky-buy a { background: var(--gold); color: #ffffff; text-decoration: none; padding: 10px 24px; font-size: 11px; font-weight: bold; letter-spacing: 2px; }
     
     .coffin-status-wrap { gap: 8px; }
     .coffin-status-wrap .coffin-text { max-width: 100px; opacity: 0.7; }
@@ -349,7 +349,6 @@ footer { padding: 100px 40px; text-align: center; font-size: 11px; color: rgba(2
                     <div class="total-price" id="totalPrice">$45 TWD</div>
                 </div>
                 <div class="magnetic-wrap">
-                    <!-- 🎯 桌面端按鈕字樣已修正為 COMING SOON -->
                     <button id="buyBtn">COMING SOON</button>
                 </div>
             </div>
@@ -443,7 +442,6 @@ footer { padding: 100px 40px; text-align: center; font-size: 11px; color: rgba(2
 
 <div class="custom-toast" id="toastMsg">系統訊息</div>
 
-<!-- 🎯 手機端底部置底按鈕字樣同步修正為 COMING SOON -->
 <div class="mobile-sticky-buy" style="display: none;">
     <span class="price" id="mobilePrice">$45 TWD</span>
     <a href="#products">COMING SOON</a>
@@ -616,7 +614,7 @@ if (notifyForm) {
     });
 }
 
-/* 🎯 結帳防禦機制：未正式開售前阻止金流請求並提示 Coming Soon */
+/* 結帳防禦機制 */
 const handleComingSoonNotice = (e) => {
     if (e) e.preventDefault();
     showToast('DEMON\'S TEAR 目前為預熱階段，尚未正式開售。敬請期待！');
@@ -637,7 +635,6 @@ if(window.innerWidth <= 900) {
     const stickyBuy = document.querySelector('.mobile-sticky-buy');
     if(stickyBuy) {
         stickyBuy.style.display = 'flex';
-        // 🎯 手機端置底按鈕點擊也套用相同的 Coming Soon 提示防禦
         const mobileAnchor = stickyBuy.querySelector('a');
         if(mobileAnchor) mobileAnchor.addEventListener('click', handleComingSoonNotice);
     }
